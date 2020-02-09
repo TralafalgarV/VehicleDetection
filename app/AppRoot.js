@@ -28,7 +28,14 @@ export default class App extends Component {
           <Stack.Navigator>
           {
             RouteConfig.map(route => (
-              <Stack.Screen name={route.name} key={route.name} component={route.component} />
+              <Stack.Screen 
+                name={route.name} 
+                key={route.name} 
+                component={route.component} 
+                options={{ 
+                  header: () => {} // 隐藏 header
+                }}
+              />
             ))
           }
           </Stack.Navigator>
