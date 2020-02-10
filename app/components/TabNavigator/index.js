@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs';
-import cssConfig from "../../styleSheet/css.config";
 
 import Home from '../Home';
 import Process from '../Process';
