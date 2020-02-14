@@ -19,6 +19,8 @@ class HeaderBar extends Component {
     rightClick: PropTypes.func,
 
     titleClick: PropTypes.func,
+
+    style: PropTypes.object,
   };
   static defaultProps = {
     title: '标题',
@@ -40,11 +42,12 @@ class HeaderBar extends Component {
       rightItemHidden,
       rightClick,
       titleClick,
-      navigation
+      navigation,
+      style,
     } = this.props;
 
     return (
-      <View style={styles.headerBar}>
+      <View style={[styles.headerBar, style]}>
         <StatusBar barStyle={'light-content'} backgroundColor={'rgba(0,0,0,0)'} translucent={true} />
         {
           !leftItemHidden ?

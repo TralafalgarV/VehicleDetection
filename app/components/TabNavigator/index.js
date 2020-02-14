@@ -11,17 +11,28 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator({ navigation, route }) {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: '#5695d2',
+        inactiveTintColor: 'gray',
+        style:{
+          
+        },
+        labelStyle: {
+          fontSize: 18,
+        }
+      }}
+    >
       <Tab.Screen 
-        name="Home" 
-        component={Home} 
+        name="首页" 
+        component={Home}
       />
       <Tab.Screen 
-        name="Process" 
+        name="流程" 
         component={Process}
       />
       <Tab.Screen 
-        name="Mine" 
+        name="我的" 
         component={Mine} 
       />
     </Tab.Navigator>

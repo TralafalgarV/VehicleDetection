@@ -1,5 +1,5 @@
 const cssConfig = {
-  titleFontSize: 28,
+  titleFontSize: 24,
   textFontSize: 18,
 };
 

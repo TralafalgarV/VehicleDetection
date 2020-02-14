@@ -18,9 +18,6 @@ class Home extends Component {
           leftItemHidden={true}
           rightItemHidden={true}
         />
-        <Button type="primary" onPress={() => navigation.navigate('Login')}>
-          Go To Login
-        </Button>
         <View style={{flex: 1}}>
         <ScrollView
           style={{ flex: 1 }}
