@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, StyleSheet } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import { Button, InputItem, List } from '@ant-design/react-native';
 
@@ -8,8 +8,14 @@ class Home extends Component {
     super(props);
     this.state = {  };
   }
+
+  renderHeader = () => {
+    return (
+      <Text style={styles.listHeader}>基本</Text>
+    );
+  }
+
   render() {
-    const { navigation } = this.props;
     return (
       <View style={{flex: 1}}>
         <HeaderBar 
@@ -25,7 +31,7 @@ class Home extends Component {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <List renderHeader={'基本'}>
+          <List renderHeader={this.renderHeader}>
             <InputItem
               clear
               error
@@ -207,5 +213,13 @@ class Home extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  listHeader: {
+    padding: 10,
+    fontSize: 18,
+    color: '#999',
+  }
+});
 
 export default Home;
