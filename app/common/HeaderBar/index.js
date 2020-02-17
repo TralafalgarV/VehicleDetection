@@ -10,17 +10,16 @@ class HeaderBar extends Component {
   }
 
   static propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.string, // 标题
+    titleClick: PropTypes.func, // 标题点击事件
 
-    leftItemHidden: PropTypes.bool,
+    leftItemHidden: PropTypes.bool, // 是否隐藏左侧按钮
 
-    rightItemName: PropTypes.string,
-    rightItemHidden: PropTypes.bool,
-    rightClick: PropTypes.func,
+    rightItemName: PropTypes.string, // 右侧按钮名称
+    rightItemHidden: PropTypes.bool, // 是否隐藏右侧按钮
+    rightClick: PropTypes.func, // 右侧点击事件
 
-    titleClick: PropTypes.func,
-
-    style: PropTypes.object,
+    style: PropTypes.object, // headerBar 的样式
   };
   static defaultProps = {
     title: '标题',
