@@ -90,6 +90,7 @@ const oilTypeArr = [
   },        
 ];
 
+// 用途类型
 const useTypeArr = [
   {
     value: 1,
@@ -129,10 +130,90 @@ const useTypeArr = [
   },      
 ];
 
+// 环保检测方法
+const checkMethodArr = [
+  {
+    value: 1,
+    label: '简易工况',
+  }, 
+  {
+    value: 2,
+    label: '双怠速',
+  }, 
+  {
+    value: 3,
+    label: '自由加速',
+  }
+];
+
+// 供油方式
+const oilSupplyTypeArr = [
+  {
+    value: 1,
+    label: '化油器改造',
+  },
+  {
+    value: 2,
+    label: '闭环电喷',
+  },
+  {
+    value: 3,
+    label: '高压共轨',
+  },
+  {
+    value: 4,
+    label: '泵喷嘴',
+  },
+  {
+    value: 5,
+    label: '单体泵',
+  },
+  {
+    value: 6,
+    label: '直列泵',
+  },  
+  {
+    value: 7,
+    label: '机械泵',
+  },
+  {
+    value: 8,
+    label: '其他',
+  },
+];
+
+// 改造方式
+const improvedTypeArr = [
+  {
+    value: 1,
+    label: '无改造',
+  },
+  {
+    value: 2,
+    label: '黄改绿',
+  },    
+];
+
+// 进气方式
+const airInflowTypeArr = [
+  {
+    value: 1,
+    label: '自吸',
+  },
+  {
+    value: 2,
+    label: '增压',
+  },  
+];
+
 export {
   checkTypeArr,
   driverTypeArr,
   gearboxTypeArr,
   oilTypeArr,
   useTypeArr,
+  checkMethodArr,
+  oilSupplyTypeArr,
+  improvedTypeArr,
+  airInflowTypeArr,
 };

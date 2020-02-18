@@ -21,6 +21,10 @@ import {
   gearboxTypeArr,
   oilTypeArr,
   useTypeArr,
+  checkMethodArr,
+  oilSupplyTypeArr,
+  improvedTypeArr,
+  airInflowTypeArr,
 } from "./config";
 
 class BaseInfo extends Component {
@@ -39,6 +43,8 @@ class BaseInfo extends Component {
       isOBDnormal: false, // OBD灯是否正常
       checkMethod: 0, // 环保检测方法
       oilSupplyType: 0, // 供油方式
+      improvedType: 0, // 是否改造
+      airInflowType: 0, // 进气方式
     };
   }
 
@@ -56,6 +62,7 @@ class BaseInfo extends Component {
       isOBDnormal,
       checkMethod,
       oilSupplyType,
+      improvedType
     } = this.state;
 
     return (
@@ -146,15 +153,14 @@ class BaseInfo extends Component {
             extra={
               <View>
                 <Checkbox
-                  checked={this.state.checkboxItem1}
+                  checked={isOBD}
                   onChange={event => {
-                    this.setState({ checkboxItem1: event.target.checked });
+                    this.setState({ isOBD: event.target.checked });
                   }}
                 >
                   是
                 </Checkbox>
               </View>
-              
             }
           >
             是否有OBD
@@ -164,21 +170,54 @@ class BaseInfo extends Component {
             extra={
               <View>
                 <Checkbox
-                  checked={this.state.checkboxItem1}
+                  checked={isOBDnormal}
                   onChange={event => {
-                    this.setState({ checkboxItem1: event.target.checked });
+                    this.setState({ isOBDnormal: event.target.checked });
                   }}
                 >
                   是
                 </Checkbox>
               </View>
-              
             }
           >
             OBD灯是否正常
           </List.Item>
           {/* 环保检测方法 */}
+          <Picker
+            data={checkMethodArr}
+            cols={1}
+            value={[checkMethod]}
+            onChange={this.selectCheckMethod}
+          >
+            <List.Item arrow="horizontal">环保检测方法</List.Item>
+          </Picker>           
           {/* 供油方式 */}
+          <Picker
+            data={oilSupplyTypeArr}
+            cols={1}
+            value={[oilSupplyType]}
+            onChange={this.selectOilSupplyType}
+          >
+            <List.Item arrow="horizontal">供油方式</List.Item>
+          </Picker>
+          {/* 是否改造 */}
+          <Picker
+            data={improvedTypeArr}
+            cols={1}
+            value={[improvedType]}
+            onChange={this.selectImprovedType}
+          >
+            <List.Item arrow="horizontal">是否改造</List.Item>
+          </Picker>
+          {/* 进气方式 */}
+          <Picker
+            data={airInflowTypeArr}
+            cols={1}
+            value={[airInflowType]}
+            onChange={this.selectAirInflowType}
+          >
+            <List.Item arrow="horizontal">是否改造</List.Item>
+          </Picker>
         </List>
       </Provider>
     );
@@ -238,13 +277,45 @@ class BaseInfo extends Component {
     }
   }  
 
-    // 选择车辆用途
-    selectUseType = values => {
-      if (values instanceof Array && values.length >= 1) {
-        value = values[0];
-        this.setState({ useType: value});
-      }
-    } 
+  // 选择车辆用途
+  selectUseType = values => {
+    if (values instanceof Array && values.length >= 1) {
+      value = values[0];
+      this.setState({ useType: value});
+    }
+  } 
+
+  // 选择环保检测方法
+  selectCheckMethod = values => {
+    if (values instanceof Array && values.length >= 1) {
+      value = values[0];
+      this.setState({ checkMethod: value});
+    }
+  } 
+
+  // 供油方式
+  selectOilSupplyType = values => {
+    if (values instanceof Array && values.length >= 1) {
+      value = values[0];
+      this.setState({ oilSupplyType: value});
+    }
+  }
+
+  // 是否改造
+  selectImprovedType = values => {
+    if (values instanceof Array && values.length >= 1) {
+      value = values[0];
+      this.setState({ improvedType: value});
+    }
+  }
+
+  // 进气方式
+  selectAirInflowType = values => {
+    if (values instanceof Array && values.length >= 1) {
+      value = values[0];
+      this.setState({ airInflowType: value});
+    }
+  }
 }
 
 const styles = StyleSheet.create({
