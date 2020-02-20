@@ -15,17 +15,7 @@ import {
   Picker,
   Checkbox,
 } from '@ant-design/react-native';
-import {
-  checkTypeArr,
-  driverTypeArr,
-  gearboxTypeArr,
-  oilTypeArr,
-  useTypeArr,
-  checkMethodArr,
-  oilSupplyTypeArr,
-  improvedTypeArr,
-  airInflowTypeArr,
-} from "./config";
+import { CONFIGINFO } from "./config";
 
 class BaseInfo extends Component {
   constructor(props) {
@@ -45,43 +35,69 @@ class BaseInfo extends Component {
       oilSupplyType: 0, // 供油方式
       improvedType: 0, // 是否改造
       airInflowType: 0, // 进气方式
+      rpm: 0, // 转速
+      power: 0, // 功率
+      cylinder: 0, // 缸数
+      displacement: 0, // 排量
     };
   }
 
-  render() {
-    const {
-      licenseNum,
-      productionDate,
-      mileage,
-      checkType,
-      driverType,
-      gearboxType,
-      oilType,
-      useType,
-      isOBD,
-      isOBDnormal,
-      checkMethod,
-      oilSupplyType,
-      improvedType
-    } = this.state;
+  // 渲染输入组件通用方法
+  renderInputItem = config => {
+    const extra = config.extra ? <Text style={styles.inputExtra}>{config.extra}</Text> : null;
+    return (
+      <InputItem
+        clear
+        textAlign='right'
+        value={this.state[config.stateProperty]}
+        onChange={value => {
+          this.commonInputFunc(value, config.stateProperty);
+        }}
+        placeholder={config.placeholder}
+        extra={extra}
+        labelNumber={config.labelNumber ? config.labelNumber : 6}
+      >
+        {config.title}
+      </InputItem>
+    );
+  }
 
+  // 渲染通用选择组件
+  renderPickerItem = config => {
+    return (
+      <Picker
+        data={config.options}
+        cols={1}
+        value={[this.state[config.stateProperty]]}
+        extra={config.extra}
+        onChange={values => {
+          if (values instanceof Array && values.length >= 1) {
+            const value = values[0];
+            this.commonInputFunc(value, config.stateProperty);
+          }
+        }}
+      >
+        <List.Item arrow="horizontal">{config.title}</List.Item>
+      </Picker>      
+    );
+  }
+
+  // 改变state通用方法
+  commonInputFunc = (value, stateProperty) => {
+    const state = this.state;
+    state[stateProperty] = value
+    this.setState(state);
+  }
+
+  render() {
     return (
       <Provider>
         <List renderHeader={this.renderHeader}>
           {/* 车牌号 */}
-          <InputItem
-            clear
-            textAlign='right'
-            value={licenseNum}
-            onChange={this.inputLicenseNum}
-            // extra="元"
-            placeholder="请输入车牌号"
-          >
-            号码号牌
-          </InputItem>
+          {this.renderInputItem(CONFIGINFO.licenseNum)}
           {/* 车辆出厂日期 */}
           <DatePicker
-            value={productionDate}
+            value={this.state.productionDate}
             mode="date"
             defaultDate={new Date()}
             minDate={new Date(1970, 1, 1)}
@@ -92,68 +108,23 @@ class BaseInfo extends Component {
             <List.Item arrow="horizontal">车辆出厂日期</List.Item>
           </DatePicker>
           {/* 里程表读数 */}
-          <InputItem
-            style={{width: 100}}
-            clear
-            textAlign='right'
-            value={mileage}
-            onChange={this.inputMileage}
-            // extra="元"
-            placeholder="请输里程表读数"
-          >
-            里程表读数
-          </InputItem>
+          {this.renderInputItem(CONFIGINFO.mileage)}
           {/* 检验类别 */}
-          <Picker
-            data={checkTypeArr}
-            cols={1}
-            value={[checkType]}
-            onChange={this.selectCheckType}
-          >
-            <List.Item arrow="horizontal">检验类别</List.Item>
-          </Picker>
+          {this.renderPickerItem(CONFIGINFO.checkType)}
           {/* 传动装置 */}
-          <Picker
-            data={driverTypeArr}
-            cols={1}
-            value={[driverType]}
-            onChange={this.selectDriverType}
-          >
-            <List.Item arrow="horizontal">传动装置</List.Item>
-          </Picker>
+          {this.renderPickerItem(CONFIGINFO.driverType)}
           {/* 变速箱 */}
-          <Picker
-            data={gearboxTypeArr}
-            cols={1}
-            value={[gearboxType]}
-            onChange={this.selectGearboxType}
-          >
-            <List.Item arrow="horizontal">变速箱</List.Item>
-          </Picker>     
+          {this.renderPickerItem(CONFIGINFO.gearboxType)}   
           {/* 燃油类别 */}
-          <Picker
-            data={oilTypeArr}
-            cols={1}
-            value={[oilType]}
-            onChange={this.selectOilType}
-          >
-            <List.Item arrow="horizontal">燃油类别</List.Item>
-          </Picker>            
+          {this.renderPickerItem(CONFIGINFO.oilType)}            
           {/* 车辆用处 */}
-          <Picker
-            data={useTypeArr}
-            cols={1}
-            value={[useType]}
-            onChange={this.selectUseType}
-          >
-            <List.Item arrow="horizontal">车辆用处</List.Item>
-          </Picker> 
+          {this.renderPickerItem(CONFIGINFO.useType)}
           {/* 是否有OBD */}
           <List.Item
             extra={
               <View>
                 <Checkbox
-                  checked={isOBD}
+                  checked={this.state.isOBD}
                   onChange={event => {
                     this.setState({ isOBD: event.target.checked });
                   }}
@@ -170,7 +141,7 @@ class BaseInfo extends Component {
             extra={
               <View>
                 <Checkbox
-                  checked={isOBDnormal}
+                  checked={this.state.isOBDnormal}
                   onChange={event => {
                     this.setState({ isOBDnormal: event.target.checked });
                   }}
@@ -183,41 +154,22 @@ class BaseInfo extends Component {
             OBD灯是否正常
           </List.Item>
           {/* 环保检测方法 */}
-          <Picker
-            data={checkMethodArr}
-            cols={1}
-            value={[checkMethod]}
-            onChange={this.selectCheckMethod}
-          >
-            <List.Item arrow="horizontal">环保检测方法</List.Item>
-          </Picker>           
+          {this.renderPickerItem(CONFIGINFO.checkMethod)}          
           {/* 供油方式 */}
-          <Picker
-            data={oilSupplyTypeArr}
-            cols={1}
-            value={[oilSupplyType]}
-            onChange={this.selectOilSupplyType}
-          >
-            <List.Item arrow="horizontal">供油方式</List.Item>
-          </Picker>
+          {this.renderPickerItem(CONFIGINFO.oilSupplyType)}
           {/* 是否改造 */}
-          <Picker
-            data={improvedTypeArr}
-            cols={1}
-            value={[improvedType]}
-            onChange={this.selectImprovedType}
-          >
-            <List.Item arrow="horizontal">是否改造</List.Item>
-          </Picker>
+          {this.renderPickerItem(CONFIGINFO.improvedType)}
           {/* 进气方式 */}
-          <Picker
-            data={airInflowTypeArr}
-            cols={1}
-            value={[airInflowType]}
-            onChange={this.selectAirInflowType}
-          >
-            <List.Item arrow="horizontal">是否改造</List.Item>
-          </Picker>
+          {this.renderPickerItem(CONFIGINFO.airInflowType)}
+          {/* 转速 */}
+          {this.renderInputItem(CONFIGINFO.rpm)}
+          {/* 功率 */}
+          {this.renderInputItem(CONFIGINFO.power)} 
+          {/* 缸数 */}
+          {this.renderInputItem(CONFIGINFO.cylinder)} 
+          {/* 排量 */}
+          {this.renderInputItem(CONFIGINFO.displacement)}      
+          {/* 车辆机械状况 */}
         </List>
       </Provider>
     );
@@ -230,92 +182,10 @@ class BaseInfo extends Component {
     );
   }
 
-  // 输入车牌号
-  inputLicenseNum = licenseNum => {
-    this.setState({ licenseNum });
-  }
-
   // 输入车辆出厂日期
   inputProductionDate = productionDate => {
     this.setState({ productionDate });
-  };
-
-  // 输入里程表读数
-  inputMileage = mileage => {
-    this.setState({ mileage });
-  }
-
-  // 选择检验类别
-  selectCheckType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ checkType: value});
-    }
-  }
-
-  // 选择传动装置
-  selectDriverType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ driverType: value});
-    }
-  }
-
-  // 选择变速箱
-  selectGearboxType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ gearboxType: value});
-    }
-  }
-
-  // 选择燃油类别
-  selectOilType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ oilType: value});
-    }
-  }  
-
-  // 选择车辆用途
-  selectUseType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ useType: value});
-    }
-  } 
-
-  // 选择环保检测方法
-  selectCheckMethod = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ checkMethod: value});
-    }
-  } 
-
-  // 供油方式
-  selectOilSupplyType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ oilSupplyType: value});
-    }
-  }
-
-  // 是否改造
-  selectImprovedType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ improvedType: value});
-    }
-  }
-
-  // 进气方式
-  selectAirInflowType = values => {
-    if (values instanceof Array && values.length >= 1) {
-      value = values[0];
-      this.setState({ airInflowType: value});
-    }
-  }
+  }; 
 }
 
 const styles = StyleSheet.create({
@@ -328,6 +198,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     backgroundColor: 'red'
+  },
+  inputExtra: {
+    width: 40,
+    color: '#666',
+    textAlign: 'right',
   }
 });
 

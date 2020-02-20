@@ -206,14 +206,111 @@ const airInflowTypeArr = [
   },  
 ];
 
-export {
-  checkTypeArr,
-  driverTypeArr,
-  gearboxTypeArr,
-  oilTypeArr,
-  useTypeArr,
-  checkMethodArr,
-  oilSupplyTypeArr,
-  improvedTypeArr,
-  airInflowTypeArr,
-};
+export const CONFIGINFO = {
+  licenseNum: {
+    title: '号码号牌',
+    stateProperty: 'licenseNum',
+    type: 'input',
+    placeholder: '请输入车牌号',
+  },
+  mileage: {
+    title: '里程表读数',
+    stateProperty: 'mileage',
+    type: 'input',
+    placeholder: '请输入里程表读数',
+  },
+  rpm: {
+    title: '转速',
+    stateProperty: 'rpm',
+    type: 'input',
+    placeholder: '请输入转速',
+    extra: 'rpm'
+  },
+  power: {
+    title: '功率',
+    stateProperty: 'power',
+    type: 'input',
+    placeholder: '请输入功率',
+    extra: 'kW'
+  },
+  cylinder: {
+    title: '缸数',
+    stateProperty: 'cylinder',
+    type: 'input',
+    placeholder: '请输入缸数',
+    extra: '缸'
+  }, 
+  displacement: {
+    title: '排量',
+    stateProperty: 'displacement',
+    type: 'input',
+    placeholder: '请输入排量',
+    extra: 'L'
+  },
+
+  checkType: {
+    title: '检验类别',
+    stateProperty: 'checkType',
+    type: 'picker',
+    extra: '请选择排量',
+    options: checkTypeArr,
+  },
+  driverType: {
+    title: '传动装置',
+    stateProperty: 'driverType',
+    type: 'picker',
+    extra: '请选择传动装置',
+    options: driverTypeArr,    
+  },
+  gearboxType: {
+    title: '变速箱',
+    stateProperty: 'gearboxType',
+    type: 'picker',
+    extra: '请选择变速箱',
+    options: gearboxTypeArr,    
+  },
+  oilType: {
+    title: '燃油类别',
+    stateProperty: 'oilType',
+    type: 'picker',
+    extra: '请选择燃油类别',
+    options: oilTypeArr,    
+  },
+  useType: {
+    title: '车辆用处',
+    stateProperty: 'useType',
+    type: 'picker',
+    extra: '请选择车辆用处',
+    options: useTypeArr,    
+  },
+  checkMethod: {
+    title: '环保检测方法',
+    stateProperty: 'checkMethod',
+    type: 'picker',
+    extra: '请选择环保检测方法',
+    options: checkMethodArr,    
+  },  
+  oilSupplyType: {
+    title: '供油方式',
+    stateProperty: 'oilSupplyType',
+    type: 'picker',
+    extra: '请选择供油方式',
+    options: oilSupplyTypeArr,    
+  },  
+  improvedType: {
+    title: '是否改造',
+    stateProperty: 'improvedType',
+    type: 'picker',
+    extra: '是否改造',
+    options: improvedTypeArr,    
+  },  
+  airInflowType: {
+    title: '进气方式',
+    stateProperty: 'airInflowType',
+    type: 'picker',
+    extra: '请选择进气方式',
+    options: airInflowTypeArr,    
+  },       
+}
+
+export default Options;
