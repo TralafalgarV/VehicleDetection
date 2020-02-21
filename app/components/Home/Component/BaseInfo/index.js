@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   View,
+  TouchableWithoutFeedback
 } from "react-native";
 import {
   InputItem,
@@ -13,7 +14,7 @@ import {
   DatePicker,
   Provider,
   Picker,
-  Checkbox,
+  Radio,
 } from '@ant-design/react-native';
 import { CONFIGINFO } from "./config";
 
@@ -29,16 +30,16 @@ class BaseInfo extends Component {
       gearboxType: 0, // 变速箱
       oilType: 0, // 燃油类别
       useType: 0, // 车辆用处
-      isOBD: false, // 是否有OBD
-      isOBDnormal: false, // OBD灯是否正常
+      isOBD: 1, // 是否有OBD
+      isOBDnormal: 1, // OBD灯是否正常
       checkMethod: 0, // 环保检测方法
       oilSupplyType: 0, // 供油方式
       improvedType: 0, // 是否改造
       airInflowType: 0, // 进气方式
-      rpm: 0, // 转速
-      power: 0, // 功率
-      cylinder: 0, // 缸数
-      displacement: 0, // 排量
+      rpm: '', // 转速
+      power: '', // 功率
+      cylinder: '', // 缸数
+      displacement: '', // 排量
     };
   }
 
@@ -82,6 +83,36 @@ class BaseInfo extends Component {
     );
   }
 
+  // 渲染单选列表
+  renderRadioList = config => {
+    return (
+      <List.Item>
+        <View style={styles.radioListContainer}>
+          <Text style={styles.title}>{config.title}</Text>
+          <View style={styles.radioListExtra}>
+          {
+            config.options && config.options.map(item => {
+              const selectd = this.state[config.stateProperty] == item.value;
+              return (
+                <TouchableWithoutFeedback 
+                  key={item.value}
+                  onPress={() => {
+                    this.commonInputFunc(item.value, config.stateProperty);
+                  }}
+                >
+                  <View style={[styles.selectionItem, selectd && {borderColor: '#5695d2'}]}>
+                    <Text style={styles.tagText}>{item.label}</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              )
+            })
+          }
+          </View>
+        </View>
+      </List.Item>
+    );
+  }
+
   // 改变state通用方法
   commonInputFunc = (value, stateProperty) => {
     const state = this.state;
@@ -102,7 +133,9 @@ class BaseInfo extends Component {
             defaultDate={new Date()}
             minDate={new Date(1970, 1, 1)}
             maxDate={new Date(2999, 12, 31)}
-            onChange={this.inputProductionDate}
+            onChange={(value) => {
+              this.commonInputFunc(value, 'productionDate');
+            }}
             format="YYYY-MM-DD"
           >
             <List.Item arrow="horizontal">车辆出厂日期</List.Item>
@@ -120,39 +153,9 @@ class BaseInfo extends Component {
           {/* 车辆用处 */}
           {this.renderPickerItem(CONFIGINFO.useType)}
           {/* 是否有OBD */}
-          <List.Item
-            extra={
-              <View>
-                <Checkbox
-                  checked={this.state.isOBD}
-                  onChange={event => {
-                    this.setState({ isOBD: event.target.checked });
-                  }}
-                >
-                  是
-                </Checkbox>
-              </View>
-            }
-          >
-            是否有OBD
-          </List.Item>
+          {this.renderRadioList(CONFIGINFO.isOBD)}
           {/* OBD灯是否正常 */}
-          <List.Item
-            extra={
-              <View>
-                <Checkbox
-                  checked={this.state.isOBDnormal}
-                  onChange={event => {
-                    this.setState({ isOBDnormal: event.target.checked });
-                  }}
-                >
-                  是
-                </Checkbox>
-              </View>
-            }
-          >
-            OBD灯是否正常
-          </List.Item>
+          {this.renderRadioList(CONFIGINFO.isOBDnormal)}
           {/* 环保检测方法 */}
           {this.renderPickerItem(CONFIGINFO.checkMethod)}          
           {/* 供油方式 */}
@@ -181,14 +184,14 @@ class BaseInfo extends Component {
       <Text style={styles.listHeader}>基本信息</Text>
     );
   }
-
-  // 输入车辆出厂日期
-  inputProductionDate = productionDate => {
-    this.setState({ productionDate });
-  }; 
 }
 
 const styles = StyleSheet.create({
+  title: {
+    color: '#000',
+    fontSize: 17,
+    textAlignVertical: 'center',
+  },
   listHeader: {
     padding: 10,
     fontSize: 18,
@@ -197,13 +200,34 @@ const styles = StyleSheet.create({
   switch: {
     flexDirection: 'row',
     margin: 10,
-    backgroundColor: 'red'
   },
   inputExtra: {
     width: 40,
     color: '#666',
     textAlign: 'right',
-  }
+  },
+  radioListContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  radioListExtra: {
+    flexDirection: 'row'
+  },
+  tagText: {
+    fontSize: 14,
+    color: '#222',
+  },
+  selectionItem: {
+    overflow: 'hidden',
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    paddingVertical: 6,
+    paddingHorizontal: 15,
+    backgroundColor: '#fff',
+    borderColor: '#ddd',
+  },
 });
 
 export default BaseInfo;

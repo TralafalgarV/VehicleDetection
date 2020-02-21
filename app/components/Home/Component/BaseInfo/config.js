@@ -206,6 +206,30 @@ const airInflowTypeArr = [
   },  
 ];
 
+// OBD灯是否正常
+const obdLightStatusArr = [
+  {
+    value: 1,
+    label: '是',
+  }, 
+  {
+    value: 0,
+    label: '否',
+  },
+];
+
+// 是否有OBD
+const haveOBDStatusArr = [
+  {
+    value: 1,
+    label: '是',
+  }, 
+  {
+    value: 0,
+    label: '否',
+  },
+];
+
 export const CONFIGINFO = {
   licenseNum: {
     title: '号码号牌',
@@ -310,7 +334,18 @@ export const CONFIGINFO = {
     type: 'picker',
     extra: '请选择进气方式',
     options: airInflowTypeArr,    
-  },       
+  },
+  isOBDnormal: {
+    title: 'OBD灯是否正常',
+    stateProperty: 'isOBDnormal',
+    type: 'radioList',
+    options: obdLightStatusArr,    
+  },   
+  isOBD: {
+    title: '是否有OBD',
+    stateProperty: 'isOBD',
+    type: 'radioList',
+    options: haveOBDStatusArr,    
+  }, 
+  
 }
-
-export default Options;
