@@ -230,7 +230,39 @@ const haveOBDStatusArr = [
   },
 ];
 
+// 催化剂型号
+const catalystTypeArr = [
+  {
+    property: 'catalystType_Front',
+    label: '前',
+  },
+  {
+    property: 'catalystType_End',
+    label: '后',
+  },
+  {
+    property: 'catalystType_Left',
+    label: '左',
+  },
+  {
+    property: 'catalystType_Right',
+    label: '右',
+  },      
+];
+
 export const CONFIGINFO = {
+  checkDate: {
+    title: '检验日期',
+    stateProperty: 'checkDate',
+    type: 'datePicker',
+    placeholder: '请选择检验日期',
+  },
+  productionDate: {
+    title: '车辆出厂日期',
+    stateProperty: 'productionDate',
+    type: 'datePicker',
+    placeholder: '请选择车辆出厂日期',
+  },    
   licenseNum: {
     title: '号码号牌',
     stateProperty: 'licenseNum',
@@ -347,5 +379,34 @@ export const CONFIGINFO = {
     type: 'radioList',
     options: haveOBDStatusArr,    
   }, 
-  
+  outOfTownEngineModel: {
+    title: '外地车发动机型号',
+    stateProperty: 'outOfTownEngineModel',
+    type: 'input',
+    placeholder: '请输入发动机型号',
+    labelNumber: 8,
+  },
+  manufacturer: {
+    title: '制造厂商',
+    stateProperty: 'manufacturer',
+    type: 'input',
+    placeholder: '请输入制造厂商',
+  },
+  DPF: {
+    title: '柴油车DPF',
+    stateProperty: 'DPF',
+    type: 'input',
+    placeholder: '请输入柴油车DPF',
+  },
+  SCR: {
+    title: 'SCR',
+    stateProperty: 'SCR',
+    type: 'input',
+    placeholder: '请输入SCR',
+  },
+  catalystType: {
+    title: '汽油车催化剂型号',
+    type: 'inputList',
+    options: catalystTypeArr,  
+  },
 }

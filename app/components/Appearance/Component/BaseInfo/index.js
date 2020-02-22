@@ -6,7 +6,8 @@ import {
   Text,
   StyleSheet,
   View,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TextInput,
 } from "react-native";
 import {
   InputItem,
@@ -14,8 +15,10 @@ import {
   DatePicker,
   Provider,
   Picker,
-  Radio,
 } from '@ant-design/react-native';
+import {
+  KeyboardAwareScrollView
+} from 'react-native-keyboard-aware-scroll-view';
 import { CONFIGINFO } from "./config";
 
 class BaseInfo extends Component {
@@ -40,7 +43,41 @@ class BaseInfo extends Component {
       power: '', // 功率
       cylinder: '', // 缸数
       displacement: '', // 排量
+      outOfTownEngineModel: '', // 外地车发动机型号
+      manufacturer: '', // 制造厂商
+      catalystType_Front: '', // 催化剂型号
+      catalystType_End: '', // 催化剂型号
+      catalystType_Left: '', // 催化剂型号
+      catalystType_Right: '', // 催化剂型号
+      DPF: '', // 柴油车DPF
+      SCR: '', // SCR
     };
+  }
+
+  // section header 标题
+  renderHeader = (title) => {
+    return (
+      <Text style={styles.listHeader}>{title}</Text>
+    );
+  }
+
+  // 渲染通用选择器组件
+  renderDatePicker = config => {
+    return (
+      <DatePicker
+        value={this.state[config.stateProperty]}
+        mode="date"
+        defaultDate={new Date()}
+        minDate={new Date(1970, 1, 1)}
+        maxDate={new Date(2999, 12, 31)}
+        onChange={(value) => {
+          this.commonInputFunc(value, config.stateProperty);
+        }}
+        format="YYYY-MM-DD"
+      >
+        <List.Item arrow="horizontal">{config.title}</List.Item>
+      </DatePicker>
+    );
   }
 
   // 渲染输入组件通用方法
@@ -113,33 +150,52 @@ class BaseInfo extends Component {
     );
   }
 
+  // 渲染输入列表组件
+  renderInputList = config => {
+    return (
+      <List.Item>
+        <View style={styles.radioListContainer}>
+          <Text style={styles.title }>{config.title}</Text>
+          <View style={styles.radioListExtra}>
+          {
+            config.options && config.options.map(item => {
+              return (
+                <TextInput 
+                  key={item.label}
+                  style={styles.inputItem}
+                  onChangeText={(value) => {
+                    this.commonInputFunc(value, item.property);
+                  }}
+                  placeholder={item.label}
+                  placeholderTextColor='#666'
+                />
+              )
+            })
+          }
+          </View>
+        </View>
+      </List.Item>
+    );
+  }
+
   // 改变state通用方法
   commonInputFunc = (value, stateProperty) => {
     const state = this.state;
     state[stateProperty] = value
-    this.setState(state);
+    this.setState(state, () => console.log(this.state));
   }
 
   render() {
     return (
       <Provider>
-        <List renderHeader={this.renderHeader}>
+        <KeyboardAwareScrollView>
+          <List renderHeader={this.renderHeader('基本信息')}>
+          {/* 检验日期 */}
+          {this.renderDatePicker(CONFIGINFO.checkDate)}
           {/* 车牌号 */}
           {this.renderInputItem(CONFIGINFO.licenseNum)}
           {/* 车辆出厂日期 */}
-          <DatePicker
-            value={this.state.productionDate}
-            mode="date"
-            defaultDate={new Date()}
-            minDate={new Date(1970, 1, 1)}
-            maxDate={new Date(2999, 12, 31)}
-            onChange={(value) => {
-              this.commonInputFunc(value, 'productionDate');
-            }}
-            format="YYYY-MM-DD"
-          >
-            <List.Item arrow="horizontal">车辆出厂日期</List.Item>
-          </DatePicker>
+          {this.renderDatePicker(CONFIGINFO.productionDate)}
           {/* 里程表读数 */}
           {this.renderInputItem(CONFIGINFO.mileage)}
           {/* 检验类别 */}
@@ -173,15 +229,21 @@ class BaseInfo extends Component {
           {/* 排量 */}
           {this.renderInputItem(CONFIGINFO.displacement)}      
           {/* 车辆机械状况 */}
-        </List>
+          {/* 车上仪表 */}
+          {/* 影响安全或引起测试偏差的机械故障 */}
+          {/* 外地车发动机型号 */}
+          {this.renderInputItem(CONFIGINFO.outOfTownEngineModel)}
+          {/* 制造厂商 */}
+          {this.renderInputItem(CONFIGINFO.manufacturer)}
+          {/* 催化剂型号 */}
+          {this.renderInputList(CONFIGINFO.catalystType)}
+          {/* 柴油车DPF */}
+          {this.renderInputItem(CONFIGINFO.DPF)}
+          {/* SCR */}
+          {this.renderInputItem(CONFIGINFO.SCR)}
+          </List>
+        </KeyboardAwareScrollView>
       </Provider>
-    );
-  }
-
-  // section header 标题
-  renderHeader = () => {
-    return (
-      <Text style={styles.listHeader}>基本信息</Text>
     );
   }
 }
@@ -227,6 +289,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: '#fff',
     borderColor: '#ddd',
+  },
+  inputItem: {
+    height: 40,
+    width: 100,
+    borderColor: '#999',
+    borderWidth: 1.5,
+    marginLeft: 5,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    fontSize: 14,
+    color: '#222',
   },
 });
 
