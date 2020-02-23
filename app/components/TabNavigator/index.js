@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import Home from '../Home';
-import Process from '../Process';
+import TransferList from '../TransferList';
 import Mine from '../Mine';
 
 const Tab = createBottomTabNavigator();
@@ -24,12 +24,12 @@ function TabNavigator({ navigation, route }) {
       }}
     >
       <Tab.Screen 
-        name="首页" 
+        name="项目页" 
         component={Home}
       />
       <Tab.Screen 
-        name="流程" 
-        component={Process}
+        name="流转单" 
+        component={TransferList}
       />
       <Tab.Screen 
         name="我的" 

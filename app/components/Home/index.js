@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
-import { Grid, Toast } from '@ant-design/react-native';
+import { Grid } from '@ant-design/react-native';
 
 const data = [
   {
@@ -30,15 +30,15 @@ class Home extends Component {
     
     switch (index) {
       case 0:
-        navigation.navigate('Appearance')
+        navigation.navigate('AppearanceList')
         break;
 
       case 1:
-        navigation.navigate('Appearance')
+        // navigation.navigate('Appearance')
         break;
 
       case 2:
-        navigation.navigate('Appearance')
+        // navigation.navigate('Appearance')
         break;        
     
       default:
@@ -60,7 +60,7 @@ class Home extends Component {
       <View style={{flex: 1}}>
         <HeaderBar 
           navigation={ this.props.navigation }
-          title='流转单'
+          title='检测项目'
           leftItemHidden={true}
           rightItemHidden={true}
         />
@@ -68,7 +68,7 @@ class Home extends Component {
           <Grid
             data={data}
             columnNum={2}
-            hasLine={true}
+            hasLine={false}
             itemStyle={styles.itemStyle}
             onPress={this.navToPage}
             renderItem={this.renderItem}
@@ -86,7 +86,10 @@ const styles = StyleSheet.create({
   },
   itemStyle: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    margin: 10,
   },
   title: {
     fontSize: 24,

@@ -15,7 +15,7 @@ class Home extends Component {
     Toast.loading('正在提交', 0.5, () => {
       Toast.success('提交成功', 0.5, ()=> {
         const { navigation } = this.props;
-        navigation && navigation.goBack();
+        navigation && navigation.navigate('AppearanceList');
       }, true);
     }, true);
   }
