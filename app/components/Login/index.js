@@ -16,7 +16,7 @@ class Login extends Component {
     const { navigation } = this.props;
 
     // TODO: 校验登录信息操作
-    navigation.navigate('TabNavigator')
+    navigation && navigation.navigate('TabNavigator')
   }
   
   render() {

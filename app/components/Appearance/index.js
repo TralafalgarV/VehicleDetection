@@ -2,11 +2,22 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
+import { WhiteSpace, Toast } from '@ant-design/react-native';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {  };
+  }
+
+  // 提交信息
+  submitInfo = () => {
+    Toast.loading('正在提交', 0.5, () => {
+      Toast.success('提交成功', 0.5, ()=> {
+        const { navigation } = this.props;
+        navigation && navigation.goBack();
+      }, true);
+    }, true);
   }
 
   render() {
@@ -15,10 +26,12 @@ class Home extends Component {
         <HeaderBar 
           navigation={ this.props.navigation }
           title='外观检测'
-          rightItemHidden={true}
+          rightItemName='提交'
+          rightClick={this.submitInfo}
         />
         {/* 基本信息 */}
           <BaseInfo />
+          <WhiteSpace size='xl' />
       </View>
     );
   }
