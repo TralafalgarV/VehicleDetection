@@ -68,6 +68,7 @@ class Home extends Component {
           <Grid
             data={data}
             columnNum={2}
+            hasLine={true}
             itemStyle={styles.itemStyle}
             onPress={this.navToPage}
             renderItem={this.renderItem}
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   itemStyle: {
-    borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center'
   },

@@ -25,20 +25,10 @@ class BaseInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      licenseNum: '', // 车牌号
       productionDate: '', // 出厂日期
+
+      licenseNum: '', // 车牌号
       mileage: '', // 里程表读数
-      checkType: 0, // 检验类别
-      driverType: 0, // 传动装置
-      gearboxType: 0, // 变速箱
-      oilType: 0, // 燃油类别
-      useType: 0, // 车辆用处
-      isOBD: 1, // 是否有OBD
-      isOBDnormal: 1, // OBD灯是否正常
-      checkMethod: 0, // 环保检测方法
-      oilSupplyType: 0, // 供油方式
-      improvedType: 0, // 是否改造
-      airInflowType: 0, // 进气方式
       rpm: '', // 转速
       power: '', // 功率
       cylinder: '', // 缸数
@@ -51,6 +41,31 @@ class BaseInfo extends Component {
       catalystType_Right: '', // 催化剂型号
       DPF: '', // 柴油车DPF
       SCR: '', // SCR
+
+      checkType: 0, // 检验类别
+      driverType: 0, // 传动装置
+      gearboxType: 0, // 变速箱
+      oilType: 0, // 燃油类别
+      useType: 0, // 车辆用处
+      checkMethod: 0, // 环保检测方法
+      oilSupplyType: 0, // 供油方式
+      improvedType: 0, // 是否改造
+      airInflowType: 0, // 进气方式
+
+      isOBD: 1, // 是否有OBD
+      isOBDnormal: 1, // OBD灯是否正常
+      machineStatus: 0, // 车辆机械状况
+      instrument: 0, // 车上仪表
+      mechanicalFailure: 0, // 影响安全或引起测试偏差的机械故障
+      exhaustPollutionFailure: 0, // 排气污染控制装置、泄露
+      crankcaseVentilate: 0, // 曲轴箱通风系统
+      fuelTankAndOils: 0, // 车辆油箱油品
+      engine_gearbox_coolingSystem: 0, // 发动机、变速箱和冷却系统等有无泄露
+      dry_clean_airPressure: 0, // 排气污染控制装置、泄露
+      oilEvaporation: 0, // 燃油蒸发控制系统
+      burningEngineOil: 0, // 烧机油或严重冒烟
+      ars_esp_epc_aeb: 0, // 中断ARS、ESP、EPC牵引力控制或自动制动系统等
+      closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
     };
   }
 
@@ -75,7 +90,9 @@ class BaseInfo extends Component {
         }}
         format="YYYY-MM-DD"
       >
-        <List.Item arrow="horizontal">{config.title}</List.Item>
+        <List.Item arrow="horizontal">
+          <Text style={styles.title}>{config.title}</Text>
+        </List.Item>
       </DatePicker>
     );
   }
@@ -95,7 +112,7 @@ class BaseInfo extends Component {
         extra={extra}
         labelNumber={config.labelNumber ? config.labelNumber : 6}
       >
-        {config.title}
+        <Text style={styles.title}>{config.title}</Text>
       </InputItem>
     );
   }
@@ -115,7 +132,9 @@ class BaseInfo extends Component {
           }
         }}
       >
-        <List.Item arrow="horizontal">{config.title}</List.Item>
+        <List.Item arrow="horizontal">
+          <Text style={styles.title}>{config.title}</Text>
+        </List.Item>
       </Picker>      
     );
   }
@@ -129,6 +148,7 @@ class BaseInfo extends Component {
           <View style={styles.radioListExtra}>
           {
             config.options && config.options.map(item => {
+              // 判断 item 是否被选中
               const selectd = this.state[config.stateProperty] == item.value;
               return (
                 <TouchableWithoutFeedback 
@@ -137,8 +157,8 @@ class BaseInfo extends Component {
                     this.commonInputFunc(item.value, config.stateProperty);
                   }}
                 >
-                  <View style={[styles.selectionItem, selectd && {borderColor: '#5695d2'}]}>
-                    <Text style={styles.tagText}>{item.label}</Text>
+                  <View style={[styles.selectionItem, selectd && styles.selectedItem]}>
+                    <Text style={[styles.tagText, selectd && {color: '#fff'}]}>{item.label}</Text>
                   </View>
                 </TouchableWithoutFeedback>
               )
@@ -200,6 +220,7 @@ class BaseInfo extends Component {
           {this.renderInputItem(CONFIGINFO.mileage)}
           {/* 检验类别 */}
           {this.renderPickerItem(CONFIGINFO.checkType)}
+          {/* {this.renderRadioList(CONFIGINFO.checkType)} */}
           {/* 传动装置 */}
           {this.renderPickerItem(CONFIGINFO.driverType)}
           {/* 变速箱 */}
@@ -228,9 +249,20 @@ class BaseInfo extends Component {
           {this.renderInputItem(CONFIGINFO.cylinder)} 
           {/* 排量 */}
           {this.renderInputItem(CONFIGINFO.displacement)}      
-          {/* 车辆机械状况 */}
-          {/* 车上仪表 */}
-          {/* 影响安全或引起测试偏差的机械故障 */}
+          {/* 车辆机械状况 start*/}
+          {this.renderRadioList(CONFIGINFO.machineStatus)}
+          {this.renderRadioList(CONFIGINFO.instrument)}
+          {this.renderRadioList(CONFIGINFO.mechanicalFailure)}
+          {this.renderRadioList(CONFIGINFO.exhaustPollutionFailure)}
+          {this.renderRadioList(CONFIGINFO.crankcaseVentilate)}
+          {this.renderRadioList(CONFIGINFO.fuelTankAndOils)}
+          {this.renderRadioList(CONFIGINFO.engine_gearbox_coolingSystem)}
+          {this.renderRadioList(CONFIGINFO.dry_clean_airPressure)}
+          {this.renderRadioList(CONFIGINFO.oilEvaporation)}
+          {this.renderRadioList(CONFIGINFO.burningEngineOil)}
+          {this.renderRadioList(CONFIGINFO.ars_esp_epc_aeb)}
+          {this.renderRadioList(CONFIGINFO.closeAirConditionerOrWarmBraw)}
+          {/* 车辆机械状况 end*/}
           {/* 外地车发动机型号 */}
           {this.renderInputItem(CONFIGINFO.outOfTownEngineModel)}
           {/* 制造厂商 */}
@@ -250,7 +282,7 @@ class BaseInfo extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#000',
+    color: '#222',
     fontSize: 17,
     textAlignVertical: 'center',
   },
@@ -276,19 +308,24 @@ const styles = StyleSheet.create({
   radioListExtra: {
     flexDirection: 'row'
   },
+  selectedItem: {
+    borderColor: '#5695d2',
+    backgroundColor: '#5695d2'
+  },
   tagText: {
     fontSize: 14,
     color: '#222',
   },
   selectionItem: {
     overflow: 'hidden',
-    borderRadius: 3,
-    borderWidth: 0.5,
+    borderRadius: 5,
+    borderWidth: 1,
     borderStyle: 'solid',
     paddingVertical: 6,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
     borderColor: '#ddd',
+    marginRight: 5,
   },
   inputItem: {
     height: 40,

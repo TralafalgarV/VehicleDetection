@@ -230,6 +230,17 @@ const haveOBDStatusArr = [
   },
 ];
 
+const alternativeArr = [
+  {
+    value: 1,
+    label: '是',
+  }, 
+  {
+    value: 0,
+    label: '否',
+  },
+];
+
 // 催化剂型号
 const catalystTypeArr = [
   {
@@ -409,4 +420,80 @@ export const CONFIGINFO = {
     type: 'inputList',
     options: catalystTypeArr,  
   },
+
+  machineStatus: {
+    title: '车辆机械状况',
+    stateProperty: 'machineStatus',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  instrument: {
+    title: '车上仪表',
+    stateProperty: 'instrument',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  mechanicalFailure: {
+    title: '影响安全或引起测试偏差的机械故障',
+    stateProperty: 'mechanicalFailure',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  exhaustPollutionFailure: {
+    title: '排气污染控制装置、泄露',
+    stateProperty: 'exhaustPollutionFailure',
+    type: 'radioList',
+    options: alternativeArr,   
+  },  
+  
+  crankcaseVentilate: {
+    title: '曲轴箱通风系统',
+    stateProperty: 'crankcaseVentilate',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  fuelTankAndOils: {
+    title: '车辆油箱油品',
+    stateProperty: 'fuelTankAndOils',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  engine_gearbox_coolingSystem: {
+    title: '发动机、变速箱和冷却系统等有无泄露',
+    stateProperty: 'engine_gearbox_coolingSystem',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  dry_clean_airPressure: {
+    title: '排气污染控制装置、泄露',
+    stateProperty: 'dry_clean_airPressure',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+
+  oilEvaporation: {
+    title: '燃油蒸发控制系统',
+    stateProperty: 'oilEvaporation',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  burningEngineOil: {
+    title: '烧机油或严重冒烟',
+    stateProperty: 'burningEngineOil',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  ars_esp_epc_aeb: {
+    title: '中断ARS、ESP、EPC牵引力控制或自动制动系统等',
+    stateProperty: 'ars_esp_epc_aeb',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+  closeAirConditionerOrWarmBraw: {
+    title: '关闭空调、暖风等附属设备',
+    stateProperty: 'closeAirConditionerOrWarmBraw',
+    type: 'radioList',
+    options: alternativeArr,   
+  }, 
+
 }
