@@ -16,11 +16,12 @@ import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
 import RouteConfig from "./router/route.config";
+import codePush from "react-native-code-push";
 
 const Drawer = createDrawerNavigator(); // 侧边栏
 const Stack = createStackNavigator();   // 路由stack 
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <SafeAreaProvider>
@@ -44,3 +45,8 @@ export default class App extends Component {
     );
   }
 }
+
+export default codePush({
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+})(App);

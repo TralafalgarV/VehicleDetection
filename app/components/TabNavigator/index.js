@@ -24,13 +24,13 @@ function TabNavigator({ navigation, route }) {
       }}
     >
       <Tab.Screen 
-        name="项目页" 
+        name="检测项" 
         component={Home}
       />
-      <Tab.Screen 
+      {/* <Tab.Screen 
         name="流转单" 
         component={TransferList}
-      />
+      /> */}
       <Tab.Screen 
         name="我的" 
         component={Mine} 

@@ -396,7 +396,7 @@ export const CONFIGINFO = {
     stateProperty: 'outOfTownEngineModel',
     type: 'input',
     placeholder: '请输入发动机型号',
-    labelNumber: 8,
+    labelNumber: 10,
   },
   manufacturer: {
     title: '制造厂商',

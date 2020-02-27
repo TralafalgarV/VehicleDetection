@@ -111,8 +111,9 @@ class BaseInfo extends Component {
           this.commonInputFunc(value, config.stateProperty);
         }}
         placeholder={config.placeholder}
+        placeholderTextColor='#999'
         extra={extra}
-        labelNumber={config.labelNumber ? config.labelNumber : 6}
+        labelNumber={config.labelNumber ? config.labelNumber : 8}
       >
         <Text style={styles.title}>{config.title}</Text>
       </InputItem>
@@ -285,7 +286,7 @@ class BaseInfo extends Component {
 const styles = StyleSheet.create({
   title: {
     color: '#222',
-    fontSize: 17,
+    fontSize: 18,
     textAlignVertical: 'center',
   },
   listHeader: {
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
   },
   inputExtra: {
     width: 40,
-    color: '#666',
+    color: '#222',
     textAlign: 'right',
   },
   radioListContainer: {
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5695d2'
   },
   tagText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#222',
   },
   selectionItem: {
@@ -326,8 +327,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
-    borderColor: '#ddd',
-    marginRight: 5,
+    borderColor: '#999',
+    marginRight: 0,
   },
   inputItem: {
     height: 40,
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     paddingHorizontal: 5,
     borderRadius: 5,
-    fontSize: 14,
+    fontSize: 16,
     color: '#222',
   },
 });
