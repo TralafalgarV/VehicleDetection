@@ -16,6 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* vehicleDetectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* vehicleDetectionTests.m */; };
+		4ADA83952407B5C000CB2E68 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4ADA83942407B5C000CB2E68 /* AppCenter-Config.plist */; };
 		583F4D17AC9367F2CF6278AE /* libPods-vehicleDetectionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 763E01B035B99F23D770C447 /* libPods-vehicleDetectionTests.a */; };
 		748176277371717F55D3C80B /* libPods-vehicleDetection-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74BE112F65621339F2DE2E52 /* libPods-vehicleDetection-tvOS.a */; };
 		94C3A9ADE38BC69ECBBB2AE7 /* libPods-vehicleDetection-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E38D21146A20E536268A60B /* libPods-vehicleDetection-tvOSTests.a */; };
@@ -58,6 +59,7 @@
 		2D02E47B1E0B4A5D006451C7 /* vehicleDetection-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "vehicleDetection-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* vehicleDetection-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "vehicleDetection-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A7041AFE6BC46A4AC262A3F /* antoutline.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = antoutline.ttf; path = "../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf"; sourceTree = "<group>"; };
+		4ADA83942407B5C000CB2E68 /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		65A5DDF38D6ABDB6647CC6EE /* Pods-vehicleDetection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vehicleDetection.debug.xcconfig"; path = "Target Support Files/Pods-vehicleDetection/Pods-vehicleDetection.debug.xcconfig"; sourceTree = "<group>"; };
 		6A8B6BB17EF390A164F8BD2F /* Pods-vehicleDetection-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vehicleDetection-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-vehicleDetection-tvOS/Pods-vehicleDetection-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		74BE112F65621339F2DE2E52 /* libPods-vehicleDetection-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vehicleDetection-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +145,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				4ADA83942407B5C000CB2E68 /* AppCenter-Config.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -351,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				4ADA83952407B5C000CB2E68 /* AppCenter-Config.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				9A0C4CEFDFEB422BAF499538 /* antfill.ttf in Resources */,
 				9933283F0BAD4A9EBB514D40 /* antoutline.ttf in Resources */,
