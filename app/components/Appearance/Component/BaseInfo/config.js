@@ -230,6 +230,7 @@ const haveOBDStatusArr = [
   },
 ];
 
+// 车辆机械状况
 const alternativeArr = [
   {
     value: 1,
@@ -319,7 +320,7 @@ export const CONFIGINFO = {
     title: '检验类别',
     stateProperty: 'checkType',
     type: 'picker',
-    extra: '请选择排量',
+    extra: '请选择类别',
     options: checkTypeArr,
   },
   driverType: {

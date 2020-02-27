@@ -15,6 +15,7 @@ import {
   DatePicker,
   Provider,
   Picker,
+  Modal,
 } from '@ant-design/react-native';
 import {
   KeyboardAwareScrollView
@@ -66,6 +67,7 @@ class BaseInfo extends Component {
       burningEngineOil: 0, // 烧机油或严重冒烟
       ars_esp_epc_aeb: 0, // 中断ARS、ESP、EPC牵引力控制或自动制动系统等
       closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
+      result: 0, // 0 失败；1 成功
     };
   }
 
@@ -118,7 +120,7 @@ class BaseInfo extends Component {
   }
 
   // 渲染通用选择组件
-  renderPickerItem = config => {
+  renderRadioList = config => {
     return (
       <Picker
         data={config.options}
@@ -219,28 +221,28 @@ class BaseInfo extends Component {
           {/* 里程表读数 */}
           {this.renderInputItem(CONFIGINFO.mileage)}
           {/* 检验类别 */}
-          {this.renderPickerItem(CONFIGINFO.checkType)}
+          {this.renderRadioList(CONFIGINFO.checkType)}
           {/* {this.renderRadioList(CONFIGINFO.checkType)} */}
           {/* 传动装置 */}
-          {this.renderPickerItem(CONFIGINFO.driverType)}
+          {this.renderRadioList(CONFIGINFO.driverType)}
           {/* 变速箱 */}
-          {this.renderPickerItem(CONFIGINFO.gearboxType)}   
+          {this.renderRadioList(CONFIGINFO.gearboxType)}   
           {/* 燃油类别 */}
-          {this.renderPickerItem(CONFIGINFO.oilType)}            
+          {this.renderRadioList(CONFIGINFO.oilType)}            
           {/* 车辆用处 */}
-          {this.renderPickerItem(CONFIGINFO.useType)}
+          {this.renderRadioList(CONFIGINFO.useType)}
           {/* 是否有OBD */}
           {this.renderRadioList(CONFIGINFO.isOBD)}
           {/* OBD灯是否正常 */}
           {this.renderRadioList(CONFIGINFO.isOBDnormal)}
           {/* 环保检测方法 */}
-          {this.renderPickerItem(CONFIGINFO.checkMethod)}          
+          {this.renderRadioList(CONFIGINFO.checkMethod)}          
           {/* 供油方式 */}
-          {this.renderPickerItem(CONFIGINFO.oilSupplyType)}
+          {this.renderRadioList(CONFIGINFO.oilSupplyType)}
           {/* 是否改造 */}
-          {this.renderPickerItem(CONFIGINFO.improvedType)}
+          {this.renderRadioList(CONFIGINFO.improvedType)}
           {/* 进气方式 */}
-          {this.renderPickerItem(CONFIGINFO.airInflowType)}
+          {this.renderRadioList(CONFIGINFO.airInflowType)}
           {/* 转速 */}
           {this.renderInputItem(CONFIGINFO.rpm)}
           {/* 功率 */}

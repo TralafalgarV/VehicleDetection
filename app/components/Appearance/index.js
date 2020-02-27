@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
-import { WhiteSpace, Toast } from '@ant-design/react-native';
+import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
 
 class Home extends Component {
   constructor(props) {
@@ -20,6 +20,34 @@ class Home extends Component {
     }, true);
   }
 
+  // 弹框选择是否通过
+  showModal = () => {
+    // 0 失败；1 成功
+    Modal.operation([
+      {
+        text: '已通过',
+        onPress: () => this.resultPress(1),
+        style: {
+          textAlign: 'center',
+          color: '#5695D2'
+        }
+      }, {
+        text: '未通过',
+        onPress: () => this.resultPress(0),
+        style: {
+          textAlign: 'center',
+          color: '#ED5655'
+        }
+      },
+    ]);
+  };
+
+  resultPress = result => {
+    this.setState({
+      result,
+    }, () => this.submitInfo());
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -27,7 +55,7 @@ class Home extends Component {
           navigation={ this.props.navigation }
           title='外观检测'
           rightItemName='提交'
-          rightClick={this.submitInfo}
+          rightClick={this.showModal}
         />
         {/* 基本信息 */}
           <BaseInfo />
@@ -38,7 +66,10 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-
+  a: {
+    textAlign: 'center',
+    color: 'red'
+  }
 });
 
 export default Home;
