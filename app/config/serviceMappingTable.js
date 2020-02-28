@@ -1,7 +1,7 @@
 // 基础服务映射表
 const serviceMappingTable = {
-  login: { // 登录服务
-    pv: 101002,
+  inputCarData: { // 提交外观检测信息
+    path: 'inputCarData',
     method: 'POST',
   },
   logout: { // 退出登录

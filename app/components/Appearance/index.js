@@ -3,15 +3,23 @@ import { View, StyleSheet } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
 import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
+import { fetchRequest } from "../../utils/fetchUtils";
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {  };
+    
+    this.result = 0; // 0 失败；1 成功
   }
 
   // 提交信息
   submitInfo = () => {
+    const state = this._baseInfo.state;
+    state.result = this.result;
+    
+    fetchRequest('inputCarData', state,
+      () => {}, () => {});
+
     Toast.loading('正在提交', 0.5, () => {
       Toast.success('提交成功', 0.5, ()=> {
         const { navigation } = this.props;
@@ -43,9 +51,8 @@ class Home extends Component {
   };
 
   resultPress = result => {
-    this.setState({
-      result,
-    }, () => this.submitInfo());
+    this.result = result;
+    this.submitInfo();
   }
 
   render() {
@@ -58,18 +65,11 @@ class Home extends Component {
           rightClick={this.showModal}
         />
         {/* 基本信息 */}
-          <BaseInfo />
+          <BaseInfo ref={ref => this._baseInfo = ref}/>
           <WhiteSpace size='xl' />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  a: {
-    textAlign: 'center',
-    color: 'red'
-  }
-});
 
 export default Home;

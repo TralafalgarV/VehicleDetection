@@ -3,9 +3,6 @@ import serviceMappingTable from '../config/serviceMappingTable'
 import { getUrl } from "../config/url";
 import { uuid } from "./uuid";
 
-/**
- user must implment the catch to handle reject
- */
 export const fetchRequest = async (service, params) => {
     // 获取 URL 
     const nowUrl = getUrl();
@@ -15,7 +12,7 @@ export const fetchRequest = async (service, params) => {
     // 校验服务接口编码
     const _service = serviceMappingTable[service];
     if (!(_service instanceof Object || typeof _service === 'object')) {
-        throw new Error(`Service ${service} does not exist`);
+        throw new Error(`service ${service} does not exist`);
     }
 
     // 校验请求数据
@@ -24,7 +21,10 @@ export const fetchRequest = async (service, params) => {
     }
 
     // POST 请求方式处理
-    let url = POST_SERVICE_URL;
+    if (!(_service.path instanceof String || typeof _service.path === 'string')) {
+        throw new Error(`service path does not exist`);
+    }
+    let url = POST_SERVICE_URL + _service.path;
 
     // GET 方式请求处理
     if (_service.method === 'GET') {
@@ -32,18 +32,19 @@ export const fetchRequest = async (service, params) => {
     }
 
     // 配置请求头
-    const _opts = Object.assign({method: _service.method}, {});
-
-    // 配置载荷
-    let body = {
-        'data': params,
-    };
+    const _opts = Object.assign({
+        method: _service.method
+    }, {});
 
     // 配置 token
     let accessToken = 'lgjp1234';
 
+    // 配置载荷
+    let body = params;
     if (typeof accessToken == 'string' && accessToken.length > 0) {
-        body = Object.assign({accessToken: accessToken}, params);
+        body = Object.assign({
+            accessToken: accessToken
+        }, params);
     }
 
     // 配置 body
@@ -60,30 +61,28 @@ export const fetchRequest = async (service, params) => {
         'source': 'vehicleDetection',
     }, _opts.headers);
 
-
-    // if (__DEV__) {
-    //     _opts.bodyObj = params;
-    //     console.info(_service.pv, _opts)
-    // }
+    // 调试
+    if (__DEV__) {
+        console.info(_service.path, _opts)
+    }
 
     return new Promise(function (resolve, reject) {
         fetch(url, _opts)
-        // 第一次过滤，网络层过滤
-        .then((response) => {
-            if (response.status >= 200 && response.status < 300) {
-                if (response.headers.get("content-type").indexOf('application/json') !== -1) {
-                    return response.text()
+            // 第一次过滤，网络层过滤
+            .then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    if (response.headers.get("content-type").indexOf('application/json') !== -1) {
+                        return response.text()
+                    }
+                    return reject(new Error(` reuslt should be in json format, but got ${response.headers.get("content-type")}`))
                 }
-                return Promise.reject(new Error(` reuslt should be in json format, but got ${response.headers.get("content-type")}`))
-            }
-            return Promise.reject(new Error(` ${JSON.stringify(response)}`))
-        })
-        .then((responseText) => JSON.parse(responseText))
-        .then((responseJSON) => {
-            resolve(responseJSON);
-        })
-        .catch((error) => {
-            reject(error);
-        });
-    })
-};
+                return reject(new Error(` ${JSON.stringify(response)}`))
+            })
+            .then((responseText) => JSON.parse(responseText))
+            .then((responseJSON) => {
+                resolve(responseJSON);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    })};

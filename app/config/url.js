@@ -5,8 +5,8 @@ const hostConfig = {
   release,
   all: [
     {
-      postUrl: `http://test.22city.cn/shopmall/post/req`,
-      getUrl: `http://test.22city.cn/shopmall/get/req`,
+      postUrl: `http://192.168.0.103:5002/chejian/chejian/`,
+      getUrl: `http://192.168.0.103:5002/chejian/chejian/inputCarData`,
       msgUrl: `http://test.22city.cn/shopmall/post/req`,
       title: '正式环境',
     },

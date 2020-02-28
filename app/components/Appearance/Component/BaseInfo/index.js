@@ -21,12 +21,14 @@ import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view';
 import { CONFIGINFO } from "./config";
+import moment from 'moment';
 
 class BaseInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       productionDate: '', // 出厂日期
+      checkDate: '', // 检测日期
 
       licenseNum: '', // 车牌号
       mileage: '', // 里程表读数
@@ -67,7 +69,6 @@ class BaseInfo extends Component {
       burningEngineOil: 0, // 烧机油或严重冒烟
       ars_esp_epc_aeb: 0, // 中断ARS、ESP、EPC牵引力控制或自动制动系统等
       closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
-      result: 0, // 0 失败；1 成功
     };
   }
 
@@ -80,15 +81,19 @@ class BaseInfo extends Component {
 
   // 渲染通用选择器组件
   renderDatePicker = config => {
+    const selectedTime = this.state[config.stateProperty] ? 
+                          moment(this.state[config.stateProperty], 'YYYYMMDD').toDate() : 
+                          '';
     return (
       <DatePicker
-        value={this.state[config.stateProperty]}
+        value={selectedTime}
         mode="date"
         defaultDate={new Date()}
         minDate={new Date(1970, 1, 1)}
         maxDate={new Date(2999, 12, 31)}
         onChange={(value) => {
-          this.commonInputFunc(value, config.stateProperty);
+          const time = moment(value).format('YYYYMMDD');
+          this.commonInputFunc(time, config.stateProperty);
         }}
         format="YYYY-MM-DD"
       >
