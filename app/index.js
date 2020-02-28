@@ -22,6 +22,17 @@ const Drawer = createDrawerNavigator(); // 侧边栏
 const Stack = createStackNavigator();   // 路由stack 
 
 class App extends Component {
+
+  /**
+   * 热更弹窗提示稳态
+   * @param {totalBytes, receivedBytes}
+   */
+  updateJSUpdateProcess = ({totalBytes, receivedBytes}) => {
+    // 显示进度百分比
+    const process = Math.floor(receivedBytes / totalBytes * 100);
+    console.log(receivedBytes + " of " + totalBytes + " received.", );
+  }
+
   render() {
     return (
       <SafeAreaProvider>
@@ -46,7 +57,44 @@ class App extends Component {
   }
 }
 
+class Root extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {  };
+  }
+
+  codePushStatusDidChange(status) {
+    switch (status) {
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        console.log("Checking for updates.");
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        console.log("Downloading package.");
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        console.log("Installing update.");
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        console.log("Up-to-date.");
+        break;
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        console.log("Update installed.");
+        break;
+    }
+  }
+
+  codePushDownloadDidProgress(progress) {
+    this._app.updateJSUpdateProcess(progress);
+  }
+
+  render() {
+    return (
+      <App ref={ref => this._app = ref}/>
+    );
+  }
+}
+
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
   mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
-})(App);
+})(Root);

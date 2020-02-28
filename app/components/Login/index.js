@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Button, InputItem } from '@ant-design/react-native';
+import codePush from "react-native-code-push";
 
 class Login extends Component {
   constructor(props) {
@@ -11,17 +12,24 @@ class Login extends Component {
     };
   }
 
-  // 登录操作
-  login = () => {
-    const { navigation } = this.props;
-
-    // TODO: 校验登录信息操作
-    navigation && navigation.navigate('TabNavigator')
+  componentDidMount() {
+    codePush.checkForUpdate().then((update) => {
+      if (update) {
+        this.setState({
+          message: '有新的更新！'
+        })
+      } else {
+        this.setState({
+          message: '已是最新，不需要更新！'
+        })
+      }
+    })
   }
   
   render() {
     return (
       <View style={styles.container}>
+        <Text>{this.state.message}</Text>
         <View style={styles.inputItem}>
           <InputItem
             clear
@@ -57,6 +65,14 @@ class Login extends Component {
           onPress={this.login}>登录</Button>
       </View>
     );
+  }
+
+  // 登录操作
+  login = () => {
+    const { navigation } = this.props;
+
+    // TODO: 校验登录信息操作
+    navigation && navigation.navigate('TabNavigator')
   }
 }
 
