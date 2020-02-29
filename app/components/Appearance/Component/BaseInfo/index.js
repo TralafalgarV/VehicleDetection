@@ -81,6 +81,7 @@ class BaseInfo extends Component {
 
   // 渲染通用选择器组件
   renderDatePicker = config => {
+    // 数据保护
     const selectedTime = this.state[config.stateProperty] ? 
                           moment(this.state[config.stateProperty], 'YYYYMMDD').toDate() : 
                           '';

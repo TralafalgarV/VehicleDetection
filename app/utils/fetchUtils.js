@@ -1,7 +1,13 @@
-import { Platform } from 'react-native';
+import {
+    Platform
+} from 'react-native';
 import serviceMappingTable from '../config/serviceMappingTable'
-import { getUrl } from "../config/url";
-import { uuid } from "./uuid";
+import {
+    getUrl
+} from "../config/url";
+import {
+    uuid
+} from "./uuid";
 
 export const fetchRequest = async (service, params) => {
     // 获取 URL 
@@ -37,7 +43,7 @@ export const fetchRequest = async (service, params) => {
     }, {});
 
     // 配置 token
-    let accessToken = 'lgjp1234';
+    let accessToken = 'accessToken_123';
 
     // 配置载荷
     let body = params;
@@ -54,7 +60,7 @@ export const fetchRequest = async (service, params) => {
     _opts.headers = Object.assign({
         'Accept': 'application/json; charset=UTF-8',
         'Content-Type': 'application/json; charset=UTF-8',
-        'pv': _service.pv,
+        'pv': _service.path,
         'cs': Platform.OS,
         'cv': '1.0.0',
         'uuid': uuid(),
@@ -70,19 +76,24 @@ export const fetchRequest = async (service, params) => {
         fetch(url, _opts)
             // 第一次过滤，网络层过滤
             .then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                    if (response.headers.get("content-type").indexOf('application/json') !== -1) {
-                        return response.text()
-                    }
-                    return reject(new Error(` reuslt should be in json format, but got ${response.headers.get("content-type")}`))
+                const contentType = response.headers.get('content-type');
+                if (contentType.includes('application/json')) {
+                    return response.json();
+                } else {
+                    return response.text();
                 }
-                return reject(new Error(` ${JSON.stringify(response)}`))
             })
-            .then((responseText) => JSON.parse(responseText))
-            .then((responseJSON) => {
-                resolve(responseJSON);
+            .then((responsejson) => {
+                if (responsejson.ok) {
+                    return resolve(responsejson);
+                } else {
+                    const error = new Error(`请求失败! 状态码: ${responsejson.status}, 失败信息: ${responsejson.statusText}`);
+                    error.response = responsejson;
+                    return reject(error);
+                }
             })
             .catch((error) => {
                 reject(error);
             });
-    })};
+    })
+};

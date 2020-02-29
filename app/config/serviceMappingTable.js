@@ -1,12 +1,12 @@
 // 基础服务映射表
 const serviceMappingTable = {
   inputCarData: { // 提交外观检测信息
-    path: 'inputCarData',
+    path: '/inputCarData',
     method: 'POST',
   },
-  logout: { // 退出登录
-    pv: 101013,
+  datalist: { // 获取指定车牌的外观信息
+    path: '/datalist',
     method: 'POST',
-  },      
+  },    
 };
 export default serviceMappingTable

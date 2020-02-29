@@ -3,10 +3,9 @@ export const release = true;
 const hostConfig = {
   now: release ? 0 : 1,
   release,
-  all: [
-    {
-      postUrl: `http://192.168.0.103:5002/chejian/chejian/`,
-      getUrl: `http://192.168.0.103:5002/chejian/chejian/inputCarData`,
+  all: [{
+      postUrl: `http://106.13.43.153:5002/chejian/chejian`,
+      getUrl: `http://192.168.0.103:5002/chejian/chejian`,
       msgUrl: `http://test.22city.cn/shopmall/post/req`,
       title: '正式环境',
     },
