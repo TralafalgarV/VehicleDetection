@@ -1,100 +1,55 @@
 import React, {Component} from 'react';
 import {
-  NavigationContainer
-} from '@react-navigation/native';
-import {
-    createStackNavigator,
-    Assets as StackAssets,
-    StackNavigationProp,
-    HeaderStyleInterpolators,
-} from '@react-navigation/stack';
-import {
-    createDrawerNavigator,
-    DrawerNavigationProp,
-} from '@react-navigation/drawer';
-import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import RouteConfig from "./router/route.config";
-import codePush from "react-native-code-push";
 
-const Drawer = createDrawerNavigator(); // 侧边栏
-const Stack = createStackNavigator();   // 路由stack 
+import  { createStore } from "../app/redux/store";
+import { reducer } from "../app/redux/reducer";
+import { Provider, connect } from "../app/redux/react-redux";
+import { Text, TouchableWithoutFeedback, View } from "react-native";
 
 class App extends Component {
 
-  /**
-   * 热更弹窗提示稳态
-   * @param {totalBytes, receivedBytes}
-   */
-  updateJSUpdateProcess = ({totalBytes, receivedBytes}) => {
-    // 显示进度百分比
-    const process = Math.floor(receivedBytes / totalBytes * 100);
-    console.log(receivedBytes + " of " + totalBytes + " received.", );
+  componentWillReceiveProps(props) {
+    console.log('[App] componentWillReceiveProps => ', props);
   }
 
   render() {
+    console.log('[App] render ');
     return (
       <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-          {
-            RouteConfig.map(route => (
-              <Stack.Screen 
-                name={route.name} 
-                key={route.name} 
-                component={route.component} 
-                options={{ 
-                  header: () => {} // 隐藏 header
-                }}
-              />
-            ))
-          }
-          </Stack.Navigator>
-        </NavigationContainer>        
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableWithoutFeedback onPress={() => this.props.plusCount()}>
+            <Text>{this.props.count} 点击</Text>
+          </TouchableWithoutFeedback>
+        </View>
       </SafeAreaProvider>
     );
   }
 }
 
-class Root extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  };
-  }
+const mapStateToProps = (state) => {
+  return {count: state.count};
+}
 
-  codePushStatusDidChange(status) {
-    switch (status) {
-      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-        console.log("Checking for updates.");
-        break;
-      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log("Downloading package.");
-        break;
-      case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log("Installing update.");
-        break;
-      case codePush.SyncStatus.UP_TO_DATE:
-        console.log("Up-to-date.");
-        break;
-      case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log("Update installed.");
-        break;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    plusCount: () => {
+      dispatch({type: 'plus'});
     }
   }
+}
 
-  codePushDownloadDidProgress(progress) {
-    this._app.updateJSUpdateProcess(progress);
-  }
+const AppWithRedux = connect(mapStateToProps, mapDispatchToProps)(App);
 
+class Root extends Component {
   render() {
     return (
-      <App ref={ref => this._app = ref}/>
+      <Provider store={createStore(reducer)}>
+        <AppWithRedux />
+      </Provider>
     );
   }
 }
 
-export default codePush({
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
-})(Root);
+export default Root;
