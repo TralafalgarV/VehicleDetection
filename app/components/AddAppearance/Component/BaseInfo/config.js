@@ -275,9 +275,9 @@ export const CONFIGINFO = {
     type: 'datePicker',
     placeholder: '请选择车辆出厂日期',
   },    
-  licenseNum: {
+  ID: {
     title: '号码号牌',
-    stateProperty: 'licenseNum',
+    stateProperty: 'ID',
     type: 'input',
     placeholder: '请输入车牌号',
   },

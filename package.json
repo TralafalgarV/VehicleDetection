@@ -20,6 +20,7 @@
     "appcenter": "3.0.0",
     "appcenter-analytics": "3.0.0",
     "appcenter-crashes": "3.0.0",
+    "immutability-helper": "^3.0.1",
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "react": "16.9.0",

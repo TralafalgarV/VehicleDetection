@@ -1,5 +1,5 @@
 /** 
- * BaseInfo：用于录入流转单基本信息部分
+ * 录入外观检测基本信息
 */
 import React, { Component } from 'react';
 import {
@@ -30,7 +30,7 @@ class BaseInfo extends Component {
       productionDate: '', // 出厂日期
       checkDate: '', // 检测日期
 
-      licenseNum: '', // 车牌号
+      ID: '', // 车牌号
       mileage: '', // 里程表读数
       rpm: '', // 转速
       power: '', // 功率
@@ -222,7 +222,7 @@ class BaseInfo extends Component {
           {/* 检验日期 */}
           {this.renderDatePicker(CONFIGINFO.checkDate)}
           {/* 车牌号 */}
-          {this.renderInputItem(CONFIGINFO.licenseNum)}
+          {this.renderInputItem(CONFIGINFO.ID)}
           {/* 车辆出厂日期 */}
           {this.renderDatePicker(CONFIGINFO.productionDate)}
           {/* 里程表读数 */}

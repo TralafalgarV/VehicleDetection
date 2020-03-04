@@ -1,9 +1,14 @@
+/** 
+ * 外观检测单信息录入组件
+ */
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { View, StyleSheet, Text } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
 import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
+import { ADD_APPEARANCE_SUCCESS } from "../../redux/actions/appearance.action";
 
 class AddAppearance extends Component {
   constructor(props) {
@@ -16,11 +21,14 @@ class AddAppearance extends Component {
   submitInfo = () => {
     const state = this._baseInfo.state;
     state.result = this.result; // 结果状态
-    state.ID = state.licenseNum; // licenseNum 赋值给 ID
 
     // fetchRequest('inputCarData', state).
     //   then(res => console.log(res)).
     //   catch((error) => console.log(error));
+
+    if (state.ID) {
+      this.props.addApearance(state);
+    }
 
     Toast.loading('正在提交', 0.5, () => {
       Toast.success('提交成功', 0.5, ()=> {
@@ -77,6 +85,24 @@ class AddAppearance extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    list: state.appearance.list,
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // 添加一条外观检测记录
+    addApearance: params => {
+      dispatch({
+        type: ADD_APPEARANCE_SUCCESS,
+        payload: params
+      });
+    },
+  };
+}
+
 const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
@@ -90,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAppearance;
+export default connect(mapStateToProps, mapDispatchToProps)(AddAppearance);

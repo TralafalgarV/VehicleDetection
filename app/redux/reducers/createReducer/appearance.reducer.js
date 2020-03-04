@@ -1,68 +1,65 @@
+import update from 'immutability-helper';
 import { 
   FETCH_APPEARANCE_LIST_SUCCESS,
   FETCH_APPEARANCE_LIST_FAIL,
-  FETCH_APPEARANCE_LIST_CANCEL,
+  ADD_APPEARANCE_SUCCESS,
+  ADD_APPEARANCE_FAIL,
 } from "../../actions/appearance.action";
 
 const list = [
   {
-    carNo: '京AU0001',
-    id: '202002020001',
-    status: '1'
+    ID: '京AU0001',
+    result: 1,
   },
   {
-    carNo: '京AU0002',
-    id: '202002020002',
-    status: '1'
+    ID: '京AU0002',
+    result: 1,
   },
   {
-    carNo: '京AU0003',
-    id: '202002020003',
-    status: '1'
+    ID: '京AU0003',
+    result: 0,
   },
   {
-    carNo: '京AU0004',
-    id: '202002020004',
-    status: '2'
+    ID: '京AU0004',
+    result: 2,
   },      
   {
-    carNo: '京AU0005',
-    id: '202002020005',
-    status: '3'
+    ID: '京AU0005',
+    result: 0,
   },  
 ];
 
 // 初始化用户权限数据
 const initialState = {
-  appearanceList: {
-    status: 'init',
-    list,
-  },
+  list: list,
 };
 
 export const appearance = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_APPEARANCE_LIST_SUCCESS:
-      return Object.assign({}, state, {
-        appearanceList: {
-          status: 'success',
-          list: action.payload,
+      return update(state, {
+        list: {
+          $set: action.payload
         }
       });
+
     case FETCH_APPEARANCE_LIST_FAIL:
-      return Object.assign({}, state, {
-        appearanceList: {
-          status: 'fail',
-          list: [],
+      return update(state, {
+        list: {
+          $set: []
         }
       });
-    case FETCH_APPEARANCE_LIST_CANCEL:
-      return Object.assign({}, state, {
-        appearanceList: {
-          status: 'cancel',
-          list: [],
+
+    case ADD_APPEARANCE_SUCCESS:
+      return update(state, {
+        list: {
+          $unshift: [action.payload]
         }
       });
+
+    case ADD_APPEARANCE_FAIL:
+      return state;
+
     default:
       return state;
   }
