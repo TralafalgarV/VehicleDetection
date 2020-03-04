@@ -14,7 +14,13 @@ class AddAppearance extends Component {
   constructor(props) {
     super(props);
 
-    this.result = 0; // 0 失败；1 成功
+    if (this.props.route.params) {
+      const { result } = this.props.route.params;
+      this.result = result; // 0 失败；1 成功
+    }
+
+    // 回显数据
+    this.data = this.props.route.params;
   }
 
   // 提交信息
@@ -76,9 +82,10 @@ class AddAppearance extends Component {
           title='外观检测'
           rightItemName='提交'
           rightClick={this.showModal}
+          rightItemHidden={this.result == 1}
         />
         {/* 基本信息 */}
-          <BaseInfo ref={ref => this._baseInfo = ref} />
+          <BaseInfo ref={ref => this._baseInfo = ref} defaultState={this.data}/>
           <WhiteSpace size='xl' />
       </View>
     );

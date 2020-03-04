@@ -26,7 +26,7 @@ import moment from 'moment';
 class BaseInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = Object.assign({}, {
       productionDate: '', // 出厂日期
       checkDate: '', // 检测日期
 
@@ -69,7 +69,9 @@ class BaseInfo extends Component {
       burningEngineOil: 0, // 烧机油或严重冒烟
       ars_esp_epc_aeb: 0, // 中断ARS、ESP、EPC牵引力控制或自动制动系统等
       closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
-    };
+    }, this.props.defaultState);
+
+    console.log('回显', this.props.defaultState);
   }
 
   // section header 标题

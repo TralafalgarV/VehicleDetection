@@ -56,7 +56,7 @@ class AppearanceList extends Component {
       <List.Item
         key={data.ID}
         extra={<Text style={[styles.status, {color}]}>{status}</Text>}
-        onPress={this.selectedItem}
+        onPress={() => this.selectedItem(data)}
       >
       {data.ID}
       </List.Item>  
@@ -95,10 +95,10 @@ class AppearanceList extends Component {
     );
   }
 
-  // 选中某个item
-  selectedItem = () => {
+  // 选中某个item，并将数据回传
+  selectedItem = (data) => {
     const { navigation } = this.props;
-    navigation && navigation.navigate('AddAppearance');
+    navigation && navigation.navigate('AddAppearance', {...data});
   }
 
   addTransferSheet = () => {
