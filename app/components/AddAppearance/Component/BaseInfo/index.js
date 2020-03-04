@@ -128,28 +128,6 @@ class BaseInfo extends Component {
     );
   }
 
-  // 渲染通用选择组件
-  renderRadioList = config => {
-    return (
-      <Picker
-        data={config.options}
-        cols={1}
-        value={[this.state[config.stateProperty]]}
-        extra={config.extra}
-        onChange={values => {
-          if (values instanceof Array && values.length >= 1) {
-            const value = values[0];
-            this.commonInputFunc(value, config.stateProperty);
-          }
-        }}
-      >
-        <List.Item arrow="horizontal">
-          <Text style={styles.title}>{config.title}</Text>
-        </List.Item>
-      </Picker>      
-    );
-  }
-
   // 渲染单选列表
   renderRadioList = config => {
     return (
@@ -194,6 +172,7 @@ class BaseInfo extends Component {
                 <TextInput 
                   key={item.label}
                   style={styles.inputItem}
+                  value={this.state[item.property]}
                   onChangeText={(value) => {
                     this.commonInputFunc(value, item.property);
                   }}
