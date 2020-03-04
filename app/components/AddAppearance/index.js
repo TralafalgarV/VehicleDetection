@@ -5,7 +5,7 @@ import BaseInfo from "./Component/BaseInfo";
 import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
 
-class Home extends Component {
+class AddAppearance extends Component {
   constructor(props) {
     super(props);
 
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default AddAppearance;

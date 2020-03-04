@@ -4,7 +4,6 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import Home from '../Home';
-import TransferList from '../TransferList';
 import Mine from '../Mine';
 
 const Tab = createBottomTabNavigator();
@@ -27,10 +26,6 @@ function TabNavigator({ navigation, route }) {
         name="检测项" 
         component={Home}
       />
-      {/* <Tab.Screen 
-        name="流转单" 
-        component={TransferList}
-      /> */}
       <Tab.Screen 
         name="我的" 
         component={Mine} 

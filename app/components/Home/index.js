@@ -34,11 +34,11 @@ class Home extends Component {
         break;
 
       case 1:
-        // navigation.navigate('Appearance')
+        // navigation.navigate('AddAppearance')
         break;
 
       case 2:
-        // navigation.navigate('Appearance')
+        // navigation.navigate('AddAppearance')
         break;        
     
       default:

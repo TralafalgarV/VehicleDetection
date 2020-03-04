@@ -10,8 +10,8 @@ import {
   SearchBar,
 } from '@ant-design/react-native';
 import { connect } from "react-redux";
-import HeaderBar from "../../../../common/HeaderBar";
-import { FETCH_APPEARANCE_LIST_SUCCESS } from "../../../../redux/actions/appearance.action";
+import HeaderBar from "../../common/HeaderBar";
+import { FETCH_APPEARANCE_LIST_SUCCESS } from "../../redux/actions/appearance.action";
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -26,12 +26,12 @@ class AppearanceList extends Component {
   // 选中某个item
   selectedItem = () => {
     const { navigation } = this.props;
-    navigation && navigation.navigate('Appearance');
+    navigation && navigation.navigate('AddAppearance');
   }
 
   addTransferSheet = () => {
     const { navigation } = this.props;
-    navigation && navigation.navigate('Appearance');
+    navigation && navigation.navigate('AddAppearance');
   }
 
   // 搜索
