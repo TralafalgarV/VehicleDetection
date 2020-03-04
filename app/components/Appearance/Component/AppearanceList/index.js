@@ -9,43 +9,17 @@ import {
   List,
   SearchBar,
 } from '@ant-design/react-native';
+import { connect } from "react-redux";
 import HeaderBar from "../../../../common/HeaderBar";
-
-const mock = [
-  {
-    carNo: '京AU0001',
-    id: '202002020001',
-    status: '1'
-  },
-  {
-    carNo: '京AU0002',
-    id: '202002020002',
-    status: '1'
-  },
-  {
-    carNo: '京AU0003',
-    id: '202002020003',
-    status: '1'
-  },
-  {
-    carNo: '京AU0004',
-    id: '202002020004',
-    status: '2'
-  },      
-  {
-    carNo: '京AU0005',
-    id: '202002020005',
-    status: '3'
-  },  
-];
+import { FETCH_APPEARANCE_LIST_SUCCESS } from "../../../../redux/actions/appearance.action";
 
 class AppearanceList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchText: '',
-      mock,
-      oldMock: mock,
+      list: this.props.list,
+      oldMock: this.props.list,
     };
   }
 
@@ -63,9 +37,9 @@ class AppearanceList extends Component {
   // 搜索
   searchCarNo = () => {
     this.setState((preState) => {
-      const { mock, searchText } = preState;
+      const { list, searchText } = preState;
       return {
-        mock: mock.filter((item) => { 
+        list: list.filter((item) => { 
           return item.carNo.match(searchText)
         })
       }
@@ -81,7 +55,7 @@ class AppearanceList extends Component {
   clear = () => {
     const { oldMock } = this.state;
     this.setState({
-      mock: oldMock,
+      list: oldMock,
       searchText: '',
     })
   }
@@ -120,7 +94,7 @@ class AppearanceList extends Component {
   }
 
   render() {
-    const { mock, searchText } = this.state;
+    const { list, searchText } = this.state;
     return (
       <View style={{flex: 1}}>
         <HeaderBar 
@@ -143,13 +117,31 @@ class AppearanceList extends Component {
         <Provider>
           <List>
           {
-            mock.map((data) => this.renderAppearanceListItem(data))
+            list.map((data) => this.renderAppearanceListItem(data))
           }                                                         
           </List>
         </Provider>
       </View>
     );
   }
+}
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    list: state.appearance.appearanceList.list,
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAppearanceList: (opts) => {
+      dispatch({
+        type: FETCH_APPEARANCE_LIST_SUCCESS,
+        payload: opts,
+      })
+    },
+  };
 }
 
 const styles = StyleSheet.create({
@@ -163,4 +155,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AppearanceList;
+export default connect(mapStateToProps, mapDispatchToProps)(AppearanceList);

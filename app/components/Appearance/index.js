@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import { View, StyleSheet, Text } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
 import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
-import { FETCH_APPEARANCE_LIST_SUCCESS } from "../../redux/actions/appearance.action";
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      list: this.props.list,
-    };
 
     this.result = 0; // 0 失败；1 成功
   }
@@ -76,29 +70,11 @@ class Home extends Component {
           rightClick={this.showModal}
         />
         {/* 基本信息 */}
-          <BaseInfo ref={ref => this._baseInfo = ref}/>
+          <BaseInfo ref={ref => this._baseInfo = ref} />
           <WhiteSpace size='xl' />
       </View>
     );
   }
-}
-
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    list: state.appearance.appearanceList.list,
-  };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchAppearanceList: (opts) => {
-      dispatch({
-        type: FETCH_APPEARANCE_LIST_SUCCESS,
-        payload: opts,
-      })
-    },
-  };
 }
 
 const styles = StyleSheet.create({
@@ -114,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
