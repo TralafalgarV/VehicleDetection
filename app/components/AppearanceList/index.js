@@ -6,13 +6,11 @@ import {
   Text,
   View,
   StyleSheet,
-  ScrollView,
-  RefreshControl,
 } from "react-native";
 import {
-  Provider,
   List,
   SearchBar,
+  ListView,
 } from '@ant-design/react-native';
 import { connect } from "react-redux";
 import HeaderBar from "../../common/HeaderBar";
@@ -24,8 +22,6 @@ class AppearanceList extends Component {
       searchText: '',
       list: this.props.list,
       oldMock: this.props.list,
-
-      refreshing: false,
     };
   }
 
@@ -67,17 +63,27 @@ class AppearanceList extends Component {
     );
   }
 
-  // 加载数据
-  onRefresh = () => {
-    this.setState({refreshing: true});
+  sleep = (time) =>
+    new Promise(resolve => setTimeout(() => resolve(), time));
 
-    setTimeout(() => {
-      this.setState({refreshing: false});
-    }, 2000);
-  }
+  onFetch = async (
+    page = 1,
+    startFetch,
+    abortFetch
+  ) => {
+
+    try {
+      let pageLimit = 20;
+
+      await this.sleep(2000);
+      startFetch(this.state.list, pageLimit);
+    } catch (err) {
+      abortFetch();
+    }
+  };
 
   render() {
-    const { list, searchText } = this.state;
+    const { searchText } = this.state;
     return (
       <View style={{flex: 1}}>
         <HeaderBar 
@@ -97,21 +103,15 @@ class AppearanceList extends Component {
             showCancelButton={true}
           />
         </View>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-              title='正在加载数据'
-            />
+        <ListView
+          onFetch={this.onFetch}
+          keyExtractor={(item, index) =>
+            `${this.state.layout} - ${item} - ${index}`
           }
-        >
-          <List>
-          {
-            list && list.map((data) => this.renderAppearanceListItem(data))
-          }                                                         
-          </List>
-        </ScrollView>
+          renderItem={this.renderAppearanceListItem}
+          numColumns={1}
+          displayDate
+        />        
       </View>
     );
   }
