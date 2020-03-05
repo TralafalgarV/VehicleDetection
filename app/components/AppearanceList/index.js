@@ -6,6 +6,8 @@ import {
   Text,
   View,
   StyleSheet,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 import {
   Provider,
@@ -22,6 +24,8 @@ class AppearanceList extends Component {
       searchText: '',
       list: this.props.list,
       oldMock: this.props.list,
+
+      refreshing: false,
     };
   }
 
@@ -63,6 +67,15 @@ class AppearanceList extends Component {
     );
   }
 
+  // 加载数据
+  onRefresh = () => {
+    this.setState({refreshing: true});
+
+    setTimeout(() => {
+      this.setState({refreshing: false});
+    }, 2000);
+  }
+
   render() {
     const { list, searchText } = this.state;
     return (
@@ -83,14 +96,22 @@ class AppearanceList extends Component {
             cancelText={<Text style={styles.cancel}>取消</Text>}
             showCancelButton={true}
           />
-        </View>    
-        <Provider>
+        </View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              title='正在加载数据'
+            />
+          }
+        >
           <List>
           {
             list && list.map((data) => this.renderAppearanceListItem(data))
           }                                                         
           </List>
-        </Provider>
+        </ScrollView>
       </View>
     );
   }
