@@ -6,6 +6,7 @@ import {
   Text,
   View,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import {
   List,
@@ -14,6 +15,9 @@ import {
 } from '@ant-design/react-native';
 import { connect } from "react-redux";
 import HeaderBar from "../../common/HeaderBar";
+import LoadingSpinner from "../../common/LoadingSpinner";
+
+const { height } = Dimensions.get('window')
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -63,25 +67,6 @@ class AppearanceList extends Component {
     );
   }
 
-  sleep = (time) =>
-    new Promise(resolve => setTimeout(() => resolve(), time));
-
-  onFetch = async (
-    page = 1,
-    startFetch,
-    abortFetch
-  ) => {
-
-    try {
-      let pageLimit = 20;
-
-      await this.sleep(2000);
-      startFetch(this.state.list, pageLimit);
-    } catch (err) {
-      abortFetch();
-    }
-  };
-
   render() {
     const { searchText } = this.state;
     return (
@@ -104,17 +89,43 @@ class AppearanceList extends Component {
           />
         </View>
         <ListView
+          refreshableMode="advanced" // basic or advanced
           onFetch={this.onFetch}
           keyExtractor={(item, index) =>
             `${this.state.layout} - ${item} - ${index}`
           }
           renderItem={this.renderAppearanceListItem}
           numColumns={1}
-          displayDate
+          paginationFetchingView={this.renderPaginationFetchingView}
+          refreshViewStyle={{ height: 80 }}
+          refreshViewHeight={80}
         />        
       </View>
     );
   }
+
+  sleep = (time) =>
+    new Promise(resolve => setTimeout(() => resolve(), time));
+
+  onFetch = async (
+    page = 1,
+    startFetch,
+    abortFetch
+  ) => {
+
+    try {
+      let pageLimit = 20;
+
+      await this.sleep(2000);
+      startFetch(this.state.list, pageLimit);
+    } catch (err) {
+      abortFetch();
+    }
+  };
+
+  renderPaginationFetchingView = () => (
+    <LoadingSpinner height={height * 0.2} text="加载中..." />
+  )  
 
   // 选中某个item，并将数据回传
   selectedItem = (data) => {
