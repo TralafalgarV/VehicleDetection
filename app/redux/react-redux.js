@@ -1,6 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * Provider 实现
+ * @export
+ * @class Provider
+ * @extends {React.Component}
+ * 通过包裹子组件，将 store 通过 context 属性，传给所有子组件
+ */
 export class Provider extends React.Component {
   // 需要声明静态属性childContextTypes来指定context对象的属性,是context的固定写法  
   static childContextTypes = {    
@@ -22,12 +29,23 @@ export class Provider extends React.Component {
   }
 }
 
+/**
+ * connect 实现
+ * 
+ * @export
+ * @param {*} mapStateToProps
+ * @param {*} mapDispatchToProps
+ * @returns
+ * 1. 从context获取store并订阅更新；
+ * 2. 通过 context 获取到 store，并将 state 和 dispatch 作为参数传给 mapStateToProps, mapDispatchToProps 回调；
+ * 3. 将 mapStateToProps, mapDispatchToProps 得出的 属性 和 函数，挂载到子组件的 props 属性上；
+ */
 export function connect(mapStateToProps, mapDispatchToProps) {
   return function (Component) {
     class Connect extends React.Component {
       
       componentDidMount() {
-        //从context获取store并订阅更新
+        // 从context获取store并订阅更新
         this.context.store.subscribe(this.handleStoreChange); 
       }
 

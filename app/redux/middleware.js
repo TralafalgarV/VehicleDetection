@@ -1,4 +1,11 @@
-// 中间件只是逐级增强 dispatch
+/**
+ * 中间件只是通过柯里化逐级增强的 dispatch
+ *
+ * @param {*} store 
+ * @param {*} next
+ * @param {*} action
+ */
+
 export const logger1 = store => next => action => {
   console.log('logger1');
   next(action);
