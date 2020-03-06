@@ -14,14 +14,24 @@ import {
   List,
   DatePicker,
   Provider,
-  Picker,
-  Modal,
 } from '@ant-design/react-native';
 import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view';
 import { CONFIGINFO } from "./config";
 import moment from 'moment';
+import ImagePicker from 'react-native-image-picker';
+
+const options = {
+  title: '请选择图片',
+  cancelButtonTitle: '取消',
+  takePhotoButtonTitle: '拍照',
+  chooseFromLibraryButtonTitle: '从相册选择',
+  storageOptions: {
+    skipBackup: true,
+    path: 'car_images',
+  },
+};
 
 class BaseInfo extends Component {
   constructor(props) {
@@ -193,6 +203,30 @@ class BaseInfo extends Component {
     const state = this.state;
     state[stateProperty] = value
     this.setState(state, () => console.log(this.state));
+  }
+
+  // 图片选择器
+  showImagePicker = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+    
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+    
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    
+        this.setState({
+          avatarSource: source,
+        });
+      }
+    });
   }
 
   render() {
