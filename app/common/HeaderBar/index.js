@@ -14,6 +14,7 @@ class HeaderBar extends Component {
     titleClick: PropTypes.func, // 标题点击事件
 
     leftItemHidden: PropTypes.bool, // 是否隐藏左侧按钮
+    leftClick:PropTypes.func, // 左侧点击事件
 
     rightItemName: PropTypes.string, // 右侧按钮名称
     rightItemHidden: PropTypes.bool, // 是否隐藏右侧按钮
@@ -40,6 +41,7 @@ class HeaderBar extends Component {
       leftItemHidden,
       rightItemHidden,
       rightClick,
+      leftClick,
       titleClick,
       navigation,
       style,
@@ -50,7 +52,13 @@ class HeaderBar extends Component {
         <StatusBar barStyle={'light-content'} backgroundColor={'rgba(0,0,0,0)'} translucent={true} />
         {
           !leftItemHidden ?
-            <TouchableWithoutFeedback onPress={() => {navigation && navigation.goBack()}}>
+            <TouchableWithoutFeedback onPress={() => {
+                if (leftClick instanceof Function) {
+                  leftClick();
+                } else {
+                  navigation && navigation.goBack()
+                }
+              }}>
               <View style={styles.headerBarItem}>
                 <Image style={styles.backImg} source={require('./imgs/goback.png')} />
               </View>

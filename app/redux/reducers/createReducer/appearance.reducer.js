@@ -1,8 +1,8 @@
 import update from 'immutability-helper';
 import { 
-  FETCH_APPEARANCE_LIST_SUCCESS,
+  FETCH_APPEARANCE_LIST,
   FETCH_APPEARANCE_LIST_FAIL,
-  ADD_APPEARANCE_SUCCESS,
+  ADD_APPEARANCE,
   ADD_APPEARANCE_FAIL,
 } from "../../actions/appearance.action";
 
@@ -36,7 +36,7 @@ const initialState = {
 
 export const appearance = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_APPEARANCE_LIST_SUCCESS:
+    case FETCH_APPEARANCE_LIST:
       return update(state, {
         list: {
           $set: action.payload,
@@ -50,7 +50,7 @@ export const appearance = (state = initialState, action) => {
         }
       });
 
-    case ADD_APPEARANCE_SUCCESS:
+    case ADD_APPEARANCE:
       const payload = action.payload;
       let newState = Object.assign({}, state);
 

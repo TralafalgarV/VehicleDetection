@@ -1,5 +1,5 @@
 // 获取外观检测数据列表
-export const FETCH_APPEARANCE_LIST_SUCCESS = 'fetch_appearance_list_success';
+export const FETCH_APPEARANCE_LIST = 'fetch_appearance_list';
 export const FETCH_APPEARANCE_LIST_FAIL = 'fetch_appearance_list_fail';
 
 // export const fetchAppearanceListSuccessAC = opts => ({
@@ -14,7 +14,7 @@ export const FETCH_APPEARANCE_LIST_FAIL = 'fetch_appearance_list_fail';
 
 
 // 添加外观检测数据
-export const ADD_APPEARANCE_SUCCESS = 'add_appearance_list_success';
+export const ADD_APPEARANCE = 'add_appearance_list';
 export const ADD_APPEARANCE_FAIL = 'add_appearance_list_fail';
 
 // export const addAppearanceSuccessAC = opts => ({
