@@ -20,7 +20,7 @@ class Login extends Component {
         })
       } else {
         this.setState({
-          message: '已是最新，不需要更新！'
+          message: '已是最新版本，不需要更新！'
         })
       }
     })
@@ -29,7 +29,6 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.message}</Text>
         <View style={styles.inputItem}>
           <InputItem
             clear
@@ -62,7 +61,10 @@ class Login extends Component {
           type={'primary'} 
           size={'large'} 
           style={styles.loginBtn}
-          onPress={this.login}>登录</Button>
+          onPress={this.login}>
+          登录
+        </Button>
+        <Text style={styles.codepushTip}>{this.state.message}</Text>
       </View>
     );
   }
@@ -88,6 +90,11 @@ const styles = StyleSheet.create({
   },
   inputItem: {
     width: 450,
+  },
+  codepushTip: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 75,
   }
 });
 

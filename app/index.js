@@ -1,23 +1,28 @@
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import {
   NavigationContainer
 } from '@react-navigation/native';
 import {
-    createStackNavigator,
-    Assets as StackAssets,
-    StackNavigationProp,
-    HeaderStyleInterpolators,
+  createStackNavigator,
+  Assets as StackAssets,
+  StackNavigationProp,
+  HeaderStyleInterpolators,
 } from '@react-navigation/stack';
 import {
-    createDrawerNavigator,
-    DrawerNavigationProp,
+  createDrawerNavigator,
+  DrawerNavigationProp,
 } from '@react-navigation/drawer';
 import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
 import RouteConfig from "./router/route.config";
 import codePush from "react-native-code-push";
-import {Provider, connect} from 'react-redux';
+import {
+  Provider
+} from 'react-redux';
+import Spinner from './common/Spinner'
 
 import store from './redux/createStore';
 
@@ -33,7 +38,7 @@ class App extends Component {
   updateJSUpdateProcess = ({totalBytes, receivedBytes}) => {
     // 显示进度百分比
     const process = Math.floor(receivedBytes / totalBytes * 100);
-    console.log(receivedBytes + " of " + totalBytes + " received.", );
+    this._spinner.show('update', `系统更新中 ${process}%`)
   }
 
   render() {
@@ -54,7 +59,8 @@ class App extends Component {
             ))
           }
           </Stack.Navigator>
-        </NavigationContainer>        
+        </NavigationContainer>  
+        <Spinner ref={(ref) => this._spinner = ref}/>      
       </SafeAreaProvider>
     );
   }
