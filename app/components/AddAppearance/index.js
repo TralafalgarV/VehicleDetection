@@ -65,8 +65,6 @@ class AddAppearance extends Component {
     //   }).
     //   catch(error => console.log(error));
 
-
-
     if (state.ID) {
       this.props.addApearance(state);
     }

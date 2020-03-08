@@ -33,6 +33,7 @@ class AppearanceList extends Component {
   componentDidMount() {
     // fetchRequest(FETCH_APPEARANCE_LIST, {}).then(res => {
     //   console.log(res);
+    //   this.props.fetchList(res);
     // })
     // .catch(err => console.log(err));
 
@@ -120,6 +121,7 @@ class AppearanceList extends Component {
     this.setState({
       refreshing: true,
     });
+
     setTimeout(() => {
       this.setState((prevState) => {
         return {
