@@ -6,18 +6,18 @@ import {
   Text,
   View,
   StyleSheet,
-  Dimensions,
 } from "react-native";
 import {
   List,
   SearchBar,
-  ListView,
 } from '@ant-design/react-native';
 import { connect } from "react-redux";
 import HeaderBar from "../../common/HeaderBar";
-import LoadingSpinner from "../../common/LoadingSpinner";
-
-const { height } = Dimensions.get('window')
+import { FETCH_APPEARANCE_LIST } from "../../redux/actions/appearance.action";
+import { fetchRequest } from "../../utils/fetchUtils";
+import { ListData } from "../../mockData";
+import PullToRefresh from 'react-native-pull-to-refresh-custom';
+import RefreshHeader from "../../common/RefreshHeader";
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -26,12 +26,23 @@ class AppearanceList extends Component {
       searchText: '',
       list: this.props.list,
       oldMock: this.props.list,
+      refreshing: false,
     };
   }
 
-  UNSAFE_componentWillReceiveProps(props) {
+  componentDidMount() {
+    // fetchRequest(FETCH_APPEARANCE_LIST, {}).then(res => {
+    //   console.log(res);
+    // })
+    // .catch(err => console.log(err));
+
+    // Mock
+    this.props.fetchList(ListData);
+  }
+
+  componentWillReceiveProps(nextProps) {
     this.setState({
-      list: props.list,
+      list: nextProps.list,
     });
   }
 
@@ -88,44 +99,36 @@ class AppearanceList extends Component {
             showCancelButton={true}
           />
         </View>
-        <ListView
-          refreshableMode="advanced" // basic or advanced
-          onFetch={this.onFetch}
-          keyExtractor={(item, index) =>
-            `${this.state.layout} - ${item} - ${index}`
-          }
-          renderItem={this.renderAppearanceListItem}
-          numColumns={1}
-          paginationFetchingView={this.renderPaginationFetchingView}
-          refreshViewStyle={{ height: 80 }}
-          refreshViewHeight={80}
-        />        
+        <PullToRefresh
+          HeaderComponent={RefreshHeader}
+          headerHeight={80}
+          refreshTriggerHeight={80}
+          refreshingHoldHeight={80}
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh}
+          style={{ flex: 1 }}
+        >
+          <List>
+          { this.props.list.map(this.renderAppearanceListItem) }
+          </List>
+        </PullToRefresh>        
       </View>
     );
   }
 
-  sleep = (time) =>
-    new Promise(resolve => setTimeout(() => resolve(), time));
-
-  onFetch = async (
-    page = 1,
-    startFetch,
-    abortFetch
-  ) => {
-
-    try {
-      let pageLimit = 20;
-
-      await this.sleep(2000);
-      startFetch(this.state.list, pageLimit);
-    } catch (err) {
-      abortFetch();
-    }
-  };
-
-  renderPaginationFetchingView = () => (
-    <LoadingSpinner height={height * 0.2} text="加载中..." />
-  )  
+  onRefresh = () => {
+    this.setState({
+      refreshing: true,
+    });
+    setTimeout(() => {
+      this.setState((prevState) => {
+        return {
+          refreshing: false,
+          list: this.props.list,
+        };
+      });
+    }, 1000);
+  }
 
   // 选中某个item，并将数据回传
   selectedItem = (data) => {
@@ -171,6 +174,18 @@ const mapStateToProps = state => {
   };
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+      // 获取数据列表
+      fetchList: params => {
+        dispatch({
+          type: FETCH_APPEARANCE_LIST,
+          payload: params,
+        })
+      }
+  }
+}
+
 const styles = StyleSheet.create({
   status: {
     fontSize: 16,
@@ -182,4 +197,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(AppearanceList);
+export default connect(mapStateToProps, mapDispatchToProps)(AppearanceList);

@@ -8,7 +8,7 @@ import HeaderBar from "../../common/HeaderBar";
 import BaseInfo from "./Component/BaseInfo";
 import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
-import { ADD_APPEARANCE, FETCH_APPEARANCE_LIST } from "../../redux/actions/appearance.action";
+import { ADD_APPEARANCE } from "../../redux/actions/appearance.action";
 
 class AddAppearance extends Component {
   constructor(props) {
@@ -21,10 +21,6 @@ class AddAppearance extends Component {
 
     // 回显数据
     this.data = this.props.route.params;
-  }
-
-  componentDidMount() {
-    fetchRequest()
   }
 
   render() {
@@ -50,20 +46,30 @@ class AddAppearance extends Component {
     const state = this._baseInfo.state;
     state.result = this.result; // 结果状态
 
-    // fetchRequest('inputCarData', state).
-    //   then(res => console.log(res)).
-    //   catch((error) => console.log(error));
+    // mock
+    Toast.loading('正在提交', 0.5, () => {
+      Toast.success('提交成功', 0.5, ()=> {
+        const { navigation } = this.props;
+          navigation && navigation.navigate('AppearanceList');
+        }, true);
+    }, true);
+
+    // 
+    // fetchRequest(ADD_APPEARANCE, state).
+    //   then(res => {
+    //     console.log(res);
+    //     Toast.success('提交成功', 0.5, ()=> {
+    //       const { navigation } = this.props;
+    //       navigation && navigation.navigate('AppearanceList');
+    //     }, true);
+    //   }).
+    //   catch(error => console.log(error));
+
+
 
     if (state.ID) {
       this.props.addApearance(state);
     }
-
-    Toast.loading('正在提交', 0.5, () => {
-      Toast.success('提交成功', 0.5, ()=> {
-        const { navigation } = this.props;
-        navigation && navigation.navigate('AppearanceList');
-      }, true);
-    }, true);
   }
 
   // 弹框选择是否通过
@@ -146,13 +152,6 @@ const mapDispatchToProps = dispatch => {
         type: ADD_APPEARANCE,
         payload: params
       });
-    },
-    // 获取数据列表
-    fetchListSuccess: params => {
-      dispatch({
-        type: FETCH_APPEARANCE_LIST,
-        payload: params,
-      })
     }
   };
 }

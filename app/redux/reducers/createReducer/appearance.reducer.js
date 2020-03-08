@@ -6,32 +6,9 @@ import {
   ADD_APPEARANCE_FAIL,
 } from "../../actions/appearance.action";
 
-const list = [
-  {
-    ID: '京AU0001',
-    result: 1,
-  },
-  {
-    ID: '京AU0002',
-    result: 1,
-  },
-  {
-    ID: '京AU0003',
-    result: 0,
-  },
-  {
-    ID: '京AU0004',
-    result: 1,
-  },      
-  {
-    ID: '京AU0005',
-    result: 0,
-  },  
-];
-
 // 初始化用户权限数据
 const initialState = {
-  list: list,
+  list: [],
 };
 
 export const appearance = (state = initialState, action) => {
