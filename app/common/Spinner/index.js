@@ -15,7 +15,7 @@ const typesImgage = {
       width: 30,
       tintColor: '#fff'
     },
-    // img: require('../../images/status/successBig.png')
+    img: require('../../images/status/successBig.png')
   },
   fail: {
     style: {
@@ -23,7 +23,7 @@ const typesImgage = {
       width: 30,
       tintColor: '#fff'
     },
-    // img: require('../../images/status/failBig.png')
+    img: require('../../images/status/failBig.png')
   },
   timeout: {
     style: {
@@ -31,7 +31,7 @@ const typesImgage = {
       width: 30,
       tintColor: '#fff'
     },
-    // img: require('../../images/status/failBig.png')
+    img: require('../../images/status/failBig.png')
   }
 }
 
