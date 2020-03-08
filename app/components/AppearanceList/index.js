@@ -93,7 +93,7 @@ class AppearanceList extends Component {
           <SearchBar
             value={searchText}
             placeholder="搜索"
-            onSubmit={this.searchCarNo}
+            onSubmit={this.searchID}
             onCancel={this.clear}
             onChange={this.onChange}
             cancelText={<Text style={styles.cancel}>取消</Text>}
@@ -107,7 +107,7 @@ class AppearanceList extends Component {
           refreshingHoldHeight={80}
           refreshing={this.state.refreshing}
           onRefresh={this.onRefresh}
-          style={{ flex: 1 }}
+          style={styles.refresh}
         >
           <List>
           { this.props.list.map(this.renderAppearanceListItem) }
@@ -144,12 +144,12 @@ class AppearanceList extends Component {
   }
 
   // 搜索
-  searchCarNo = () => {
+  searchID = () => {
     this.setState((preState) => {
       const { list, searchText } = preState;
       return {
         list: list.filter((item) => { 
-          return item.carNo.match(searchText)
+          return item.ID.match(searchText)
         })
       }
     });
@@ -196,6 +196,10 @@ const styles = StyleSheet.create({
   cancel: {
     fontSize: 16,
     color: '#666'
+  },
+  refresh: {
+    flex: 1,
+    zIndex: -1
   }
 });
 

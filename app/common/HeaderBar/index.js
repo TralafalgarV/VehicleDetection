@@ -46,7 +46,6 @@ class HeaderBar extends Component {
       navigation,
       style,
     } = this.props;
-
     return (
       <View style={[styles.headerBar, style]}>
         <StatusBar barStyle={'light-content'} backgroundColor={'rgba(0,0,0,0)'} translucent={true} />
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     backgroundColor: '#5695d2',
     position: 'relative',
+    zIndex: 9999,
   },
   headerBarItem: {
     width: 66,
