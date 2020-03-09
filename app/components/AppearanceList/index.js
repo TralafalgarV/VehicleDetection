@@ -24,8 +24,8 @@ class AppearanceList extends Component {
     super(props);
     this.state = {
       searchText: '',
-      list: this.props.list,
-      oldMock: this.props.list,
+      list: this.props.list || [],
+      oldMock: this.props.list || [],
       refreshing: false,
     };
   }
@@ -44,6 +44,7 @@ class AppearanceList extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       list: nextProps.list,
+      oldMock: nextProps.list,
     });
   }
 
@@ -80,7 +81,7 @@ class AppearanceList extends Component {
   }
 
   render() {
-    const { searchText } = this.state;
+    const { searchText, list } = this.state;
     return (
       <View style={{flex: 1}}>
         <HeaderBar 
@@ -110,7 +111,7 @@ class AppearanceList extends Component {
           style={styles.refresh}
         >
           <List>
-          { this.props.list.map(this.renderAppearanceListItem) }
+          { list.length > 0 && list.map(this.renderAppearanceListItem) }
           </List>
         </PullToRefresh>        
       </View>
@@ -147,11 +148,8 @@ class AppearanceList extends Component {
   searchID = () => {
     this.setState((preState) => {
       const { list, searchText } = preState;
-      return {
-        list: list.filter((item) => { 
-          return item.ID.match(searchText)
-        })
-      }
+      const newList = list.filter(item => item.ID.match(searchText));
+      return { list: newList };
     });
   }
 

@@ -8,6 +8,7 @@ import {
   View,
   TouchableWithoutFeedback,
   TextInput,
+  Image,
 } from "react-native";
 import {
   InputItem,
@@ -99,6 +100,7 @@ class BaseInfo extends Component {
                           '';
     return (
       <DatePicker
+        key={config.stateProperty}
         value={selectedTime}
         mode="date"
         defaultDate={new Date()}
@@ -122,6 +124,7 @@ class BaseInfo extends Component {
     const extra = config.extra ? <Text style={styles.inputExtra}>{config.extra}</Text> : null;
     return (
       <InputItem
+        key={config.stateProperty}
         clear
         textAlign='right'
         value={this.state[config.stateProperty]}
@@ -141,7 +144,7 @@ class BaseInfo extends Component {
   // 渲染单选列表
   renderRadioList = config => {
     return (
-      <List.Item>
+      <List.Item key={config.stateProperty}>
         <View style={styles.radioListContainer}>
           <Text style={styles.title}>{config.title}</Text>
           <View style={styles.radioListExtra}>
@@ -172,7 +175,7 @@ class BaseInfo extends Component {
   // 渲染输入列表组件
   renderInputList = config => {
     return (
-      <List.Item>
+      <List.Item key={config.title} >
         <View style={styles.radioListContainer}>
           <Text style={styles.title }>{config.title}</Text>
           <View style={styles.radioListExtra}>
@@ -201,8 +204,8 @@ class BaseInfo extends Component {
   // 改变state通用方法
   commonInputFunc = (value, stateProperty) => {
     const state = this.state;
-    state[stateProperty] = value
-    this.setState(state, () => console.log(this.state));
+    state[stateProperty] = value;
+    this.setState(state);
   }
 
   // 图片选择器
@@ -297,6 +300,12 @@ class BaseInfo extends Component {
           {this.renderInputItem(CONFIGINFO.DPF)}
           {/* SCR */}
           {this.renderInputItem(CONFIGINFO.SCR)}
+          {/* 图片选择器 */}
+          <List.Item>
+            <TouchableWithoutFeedback onPress={this.showImagePicker}>
+              <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+            </TouchableWithoutFeedback>
+          </List.Item>
           </List>
         </KeyboardAwareScrollView>
       </Provider>
@@ -362,6 +371,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#222',
   },
+  uploadAvatar: {
+    width: 30,
+    height: 30,
+    backgroundColor: '#DDD'
+  }
 });
 
 export default BaseInfo;
