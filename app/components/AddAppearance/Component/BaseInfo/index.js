@@ -11,28 +11,18 @@ import {
   Image,
 } from "react-native";
 import {
-  InputItem,
   List,
-  DatePicker,
   Provider,
 } from '@ant-design/react-native';
 import {
   KeyboardAwareScrollView
 } from 'react-native-keyboard-aware-scroll-view';
 import { CONFIGINFO } from "./config";
-import moment from 'moment';
 import ImagePicker from 'react-native-image-picker';
-
-const options = {
-  title: '请选择图片',
-  cancelButtonTitle: '取消',
-  takePhotoButtonTitle: '拍照',
-  chooseFromLibraryButtonTitle: '从相册选择',
-  storageOptions: {
-    skipBackup: true,
-    path: 'car_images',
-  },
-};
+import DatePickerItem from "../../../../common/ListItem/DatePickerItem";
+import ListInputItem from "../../../../common/ListItem/ListInputItem";
+import RadioListItem from "../../../../common/ListItem/RadioListItem";
+import InputList from "../../../../common/ListItem/InputList";
 
 class BaseInfo extends Component {
   constructor(props) {
@@ -68,6 +58,7 @@ class BaseInfo extends Component {
 
       isOBD: 1, // 是否有OBD
       isOBDnormal: 1, // OBD灯是否正常
+      
       machineStatus: 0, // 车辆机械状况
       instrument: 0, // 车上仪表
       mechanicalFailure: 0, // 影响安全或引起测试偏差的机械故障
@@ -85,6 +76,85 @@ class BaseInfo extends Component {
     console.log('回显', this.props.defaultState);
   }
 
+  render() {
+    return (
+      <Provider>
+        <KeyboardAwareScrollView>
+          <List renderHeader={this.renderHeader('基本信息')}>
+          {/* 检验日期 */}
+          <DatePickerItem config={CONFIGINFO.checkDate} state={this.state} onChange={this.commonInputFunc} />
+          {/* 车牌号 */}
+          <ListInputItem config={CONFIGINFO.ID} state={this.state} onChange={this.commonInputFunc} />
+          {/* 车辆出厂日期 */}
+          <DatePickerItem config={CONFIGINFO.productionDate} state={this.state} onChange={this.commonInputFunc}/>
+          {/* 里程表读数 */}
+          <ListInputItem config={CONFIGINFO.mileage} state={this.state} onChange={this.commonInputFunc} />
+          {/* 检验类别 */}
+          <RadioListItem config={CONFIGINFO.checkType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 传动装置 */}
+          <RadioListItem config={CONFIGINFO.driverType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 变速箱 */}
+          <RadioListItem config={CONFIGINFO.gearboxType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 燃油类别 */}
+          <RadioListItem config={CONFIGINFO.oilType} state={this.state} onChange={this.commonInputFunc} />           
+          {/* 车辆用处 */}
+          <RadioListItem config={CONFIGINFO.useType} state={this.state} onChange={this.commonInputFunc} />           
+          {/* 是否有OBD */}
+          <RadioListItem config={CONFIGINFO.isOBD} state={this.state} onChange={this.commonInputFunc} />           
+          {/* OBD灯是否正常 */}
+          <RadioListItem config={CONFIGINFO.isOBDnormal} state={this.state} onChange={this.commonInputFunc} />
+          {/* 环保检测方法 */}
+          <RadioListItem config={CONFIGINFO.checkMethod} state={this.state} onChange={this.commonInputFunc} />
+          {/* 供油方式 */}
+          <RadioListItem config={CONFIGINFO.oilSupplyType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 是否改造 */}
+          <RadioListItem config={CONFIGINFO.improvedType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 进气方式 */}
+          <RadioListItem config={CONFIGINFO.airInflowType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 转速 */}
+          <ListInputItem config={CONFIGINFO.rpm} state={this.state} onChange={this.commonInputFunc} />
+          {/* 功率 */}
+          <ListInputItem config={CONFIGINFO.power} state={this.state} onChange={this.commonInputFunc} />
+          {/* 缸数 */}
+          <ListInputItem config={CONFIGINFO.cylinder} state={this.state} onChange={this.commonInputFunc} />
+          {/* 排量 */}
+          <ListInputItem config={CONFIGINFO.displacement} state={this.state} onChange={this.commonInputFunc} />
+          {/* 车辆机械状况 start*/}
+          <RadioListItem config={CONFIGINFO.machineStatus} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.instrument} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.mechanicalFailure} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.exhaustPollutionFailure} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.crankcaseVentilate} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.fuelTankAndOils} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.engine_gearbox_coolingSystem} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.dry_clean_airPressure} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.oilEvaporation} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.burningEngineOil} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.ars_esp_epc_aeb} state={this.state} onChange={this.commonInputFunc} />
+          <RadioListItem config={CONFIGINFO.closeAirConditionerOrWarmBraw} state={this.state} onChange={this.commonInputFunc} />
+          {/* 车辆机械状况 end*/}
+          {/* 外地车发动机型号 */}
+          <ListInputItem config={CONFIGINFO.outOfTownEngineModel} state={this.state} onChange={this.commonInputFunc} />
+          {/* 制造厂商 */}
+          <ListInputItem config={CONFIGINFO.displacement} state={this.state} onChange={this.commonInputFunc} />
+          {/* 催化剂型号 */}
+          <InputList config={CONFIGINFO.catalystType} state={this.state} onChange={this.commonInputFunc} />
+          {/* 柴油车DPF */}
+          <ListInputItem config={CONFIGINFO.displacement} state={this.state} onChange={this.commonInputFunc} />
+          {/* SCR */}
+          <ListInputItem config={CONFIGINFO.displacement} state={this.state} onChange={this.commonInputFunc} />
+          {/* 图片选择器 */}
+          <List.Item>
+            <TouchableWithoutFeedback onPress={this.showImagePicker}>
+              <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
+            </TouchableWithoutFeedback>
+          </List.Item>
+          </List>
+        </KeyboardAwareScrollView>
+      </Provider>
+    );
+  }
+
   // section header 标题
   renderHeader = (title) => {
     return (
@@ -92,124 +162,29 @@ class BaseInfo extends Component {
     );
   }
 
-  // 渲染通用选择器组件
-  renderDatePicker = config => {
-    // 数据保护
-    const selectedTime = this.state[config.stateProperty] ? 
-                          moment(this.state[config.stateProperty], 'YYYYMMDD').toDate() : 
-                          '';
-    return (
-      <DatePicker
-        key={config.stateProperty}
-        value={selectedTime}
-        mode="date"
-        defaultDate={new Date()}
-        minDate={new Date(1970, 1, 1)}
-        maxDate={new Date(2999, 12, 31)}
-        onChange={(value) => {
-          const time = moment(value).format('YYYYMMDD');
-          this.commonInputFunc(time, config.stateProperty);
-        }}
-        format="YYYY-MM-DD"
-      >
-        <List.Item arrow="horizontal">
-          <Text style={styles.title}>{config.title}</Text>
-        </List.Item>
-      </DatePicker>
-    );
-  }
-
-  // 渲染输入组件通用方法
-  renderInputItem = config => {
-    const extra = config.extra ? <Text style={styles.inputExtra}>{config.extra}</Text> : null;
-    return (
-      <InputItem
-        key={config.stateProperty}
-        clear
-        textAlign='right'
-        value={this.state[config.stateProperty]}
-        onChange={value => {
-          this.commonInputFunc(value, config.stateProperty);
-        }}
-        placeholder={config.placeholder}
-        placeholderTextColor='#999'
-        extra={extra}
-        labelNumber={config.labelNumber ? config.labelNumber : 8}
-      >
-        <Text style={styles.title}>{config.title}</Text>
-      </InputItem>
-    );
-  }
-
-  // 渲染单选列表
-  renderRadioList = config => {
-    return (
-      <List.Item key={config.stateProperty}>
-        <View style={styles.radioListContainer}>
-          <Text style={styles.title}>{config.title}</Text>
-          <View style={styles.radioListExtra}>
-          {
-            config.options && config.options.map(item => {
-              // 判断 item 是否被选中
-              const selectd = this.state[config.stateProperty] == item.value;
-              return (
-                <TouchableWithoutFeedback 
-                  key={item.value}
-                  onPress={() => {
-                    this.commonInputFunc(item.value, config.stateProperty);
-                  }}
-                >
-                  <View style={[styles.selectionItem, selectd && styles.selectedItem]}>
-                    <Text style={[styles.tagText, selectd && {color: '#fff'}]}>{item.label}</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            })
-          }
-          </View>
-        </View>
-      </List.Item>
-    );
-  }
-
-  // 渲染输入列表组件
-  renderInputList = config => {
-    return (
-      <List.Item key={config.title} >
-        <View style={styles.radioListContainer}>
-          <Text style={styles.title }>{config.title}</Text>
-          <View style={styles.radioListExtra}>
-          {
-            config.options && config.options.map(item => {
-              return (
-                <TextInput 
-                  key={item.label}
-                  style={styles.inputItem}
-                  value={this.state[item.property]}
-                  onChangeText={(value) => {
-                    this.commonInputFunc(value, item.property);
-                  }}
-                  placeholder={item.label}
-                  placeholderTextColor='#666'
-                />
-              )
-            })
-          }
-          </View>
-        </View>
-      </List.Item>
-    );
-  }
-
   // 改变state通用方法
   commonInputFunc = (value, stateProperty) => {
     const state = this.state;
     state[stateProperty] = value;
-    this.setState(state);
-  }
+    this.setState(state, () => console.log(this.state));
+  }  
 
   // 图片选择器
   showImagePicker = () => {
+    const options = {
+      title: '请选择图片',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '拍照',
+      chooseFromLibraryButtonTitle: '从相册选择',
+      quality: 0.5,
+      maxWidth: 300,
+      maxHeight: 300,
+      storageOptions: {
+        skipBackup: true,
+        path: 'car_images',
+      },
+    };
+
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
     
@@ -222,154 +197,19 @@ class BaseInfo extends Component {
       } else {
         const source = { uri: response.uri };
     
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-    
         this.setState({
           avatarSource: source,
         });
       }
     });
-  }
-
-  render() {
-    return (
-      <Provider>
-        <KeyboardAwareScrollView>
-          <List renderHeader={this.renderHeader('基本信息')}>
-          {/* 检验日期 */}
-          {this.renderDatePicker(CONFIGINFO.checkDate)}
-          {/* 车牌号 */}
-          {this.renderInputItem(CONFIGINFO.ID)}
-          {/* 车辆出厂日期 */}
-          {this.renderDatePicker(CONFIGINFO.productionDate)}
-          {/* 里程表读数 */}
-          {this.renderInputItem(CONFIGINFO.mileage)}
-          {/* 检验类别 */}
-          {this.renderRadioList(CONFIGINFO.checkType)}
-          {/* {this.renderRadioList(CONFIGINFO.checkType)} */}
-          {/* 传动装置 */}
-          {this.renderRadioList(CONFIGINFO.driverType)}
-          {/* 变速箱 */}
-          {this.renderRadioList(CONFIGINFO.gearboxType)}   
-          {/* 燃油类别 */}
-          {this.renderRadioList(CONFIGINFO.oilType)}            
-          {/* 车辆用处 */}
-          {this.renderRadioList(CONFIGINFO.useType)}
-          {/* 是否有OBD */}
-          {this.renderRadioList(CONFIGINFO.isOBD)}
-          {/* OBD灯是否正常 */}
-          {this.renderRadioList(CONFIGINFO.isOBDnormal)}
-          {/* 环保检测方法 */}
-          {this.renderRadioList(CONFIGINFO.checkMethod)}          
-          {/* 供油方式 */}
-          {this.renderRadioList(CONFIGINFO.oilSupplyType)}
-          {/* 是否改造 */}
-          {this.renderRadioList(CONFIGINFO.improvedType)}
-          {/* 进气方式 */}
-          {this.renderRadioList(CONFIGINFO.airInflowType)}
-          {/* 转速 */}
-          {this.renderInputItem(CONFIGINFO.rpm)}
-          {/* 功率 */}
-          {this.renderInputItem(CONFIGINFO.power)} 
-          {/* 缸数 */}
-          {this.renderInputItem(CONFIGINFO.cylinder)} 
-          {/* 排量 */}
-          {this.renderInputItem(CONFIGINFO.displacement)}      
-          {/* 车辆机械状况 start*/}
-          {this.renderRadioList(CONFIGINFO.machineStatus)}
-          {this.renderRadioList(CONFIGINFO.instrument)}
-          {this.renderRadioList(CONFIGINFO.mechanicalFailure)}
-          {this.renderRadioList(CONFIGINFO.exhaustPollutionFailure)}
-          {this.renderRadioList(CONFIGINFO.crankcaseVentilate)}
-          {this.renderRadioList(CONFIGINFO.fuelTankAndOils)}
-          {this.renderRadioList(CONFIGINFO.engine_gearbox_coolingSystem)}
-          {this.renderRadioList(CONFIGINFO.dry_clean_airPressure)}
-          {this.renderRadioList(CONFIGINFO.oilEvaporation)}
-          {this.renderRadioList(CONFIGINFO.burningEngineOil)}
-          {this.renderRadioList(CONFIGINFO.ars_esp_epc_aeb)}
-          {this.renderRadioList(CONFIGINFO.closeAirConditionerOrWarmBraw)}
-          {/* 车辆机械状况 end*/}
-          {/* 外地车发动机型号 */}
-          {this.renderInputItem(CONFIGINFO.outOfTownEngineModel)}
-          {/* 制造厂商 */}
-          {this.renderInputItem(CONFIGINFO.manufacturer)}
-          {/* 催化剂型号 */}
-          {this.renderInputList(CONFIGINFO.catalystType)}
-          {/* 柴油车DPF */}
-          {this.renderInputItem(CONFIGINFO.DPF)}
-          {/* SCR */}
-          {this.renderInputItem(CONFIGINFO.SCR)}
-          {/* 图片选择器 */}
-          <List.Item>
-            <TouchableWithoutFeedback onPress={this.showImagePicker}>
-              <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
-            </TouchableWithoutFeedback>
-          </List.Item>
-          </List>
-        </KeyboardAwareScrollView>
-      </Provider>
-    );
-  }
+  }  
 }
 
 const styles = StyleSheet.create({
-  title: {
-    color: '#222',
-    fontSize: 18,
-    textAlignVertical: 'center',
-  },
   listHeader: {
     padding: 10,
     fontSize: 18,
     color: '#999',
-  },
-  switch: {
-    flexDirection: 'row',
-    margin: 10,
-  },
-  inputExtra: {
-    width: 40,
-    color: '#222',
-    textAlign: 'right',
-  },
-  radioListContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  radioListExtra: {
-    flexDirection: 'row'
-  },
-  selectedItem: {
-    borderColor: '#5695d2',
-    backgroundColor: '#5695d2'
-  },
-  tagText: {
-    fontSize: 16,
-    color: '#222',
-  },
-  selectionItem: {
-    overflow: 'hidden',
-    borderRadius: 5,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    paddingVertical: 6,
-    paddingHorizontal: 15,
-    backgroundColor: '#fff',
-    borderColor: '#999',
-    marginRight: 0,
-  },
-  inputItem: {
-    height: 40,
-    width: 100,
-    borderColor: '#999',
-    borderWidth: 1.5,
-    marginLeft: 5,
-    paddingHorizontal: 5,
-    borderRadius: 5,
-    fontSize: 16,
-    color: '#222',
   },
   uploadAvatar: {
     width: 30,
