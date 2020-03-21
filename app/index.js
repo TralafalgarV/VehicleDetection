@@ -22,6 +22,7 @@ import codePush from "react-native-code-push";
 import {
   Provider
 } from 'react-redux';
+import { Provider as PV } from '@ant-design/react-native'; // 用来支持 Modal 弹窗
 import Spinner from './common/Spinner'
 
 import store from './redux/createStore';
@@ -99,7 +100,9 @@ class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App ref={ref => this._app = ref}/>
+        <PV>
+          <App ref={ref => this._app = ref}/>
+        </PV>
       </Provider>
     );
   }

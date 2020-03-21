@@ -3,6 +3,7 @@ import TabNavigator from '../components/TabNavigator';
 import Details from '../components/Details';
 import AddAppearance from '../components/AddAppearance';
 import AppearanceList from '../components/AppearanceList';
+import BaseDetailInfo from "../components/AddAppearance/Component/BaseDetailInfo";
 
 // 注意：放在路由堆栈顶部组件优先展示
 const RouteConfig = [
@@ -29,7 +30,12 @@ const RouteConfig = [
     // 外观流转单列表
     name: 'AppearanceList',
     component: AppearanceList,
-  },    
+  },
+  {
+    // 流转单 -- 外观基本信息
+    name: 'BaseDetailInfo',
+    component: BaseDetailInfo,
+  },
 ];
 
 export default RouteConfig;

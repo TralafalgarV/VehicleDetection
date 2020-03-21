@@ -2,7 +2,7 @@ export const ListData = [{
     "productionDate": "20200308",
     "checkDate": "20200308",
     "ID": "京PM920",
-    "mileage": "122334",
+    "mileage": "1111",
     "rpm": "4",
     "power": "3",
     "cylinder": "2",
@@ -38,13 +38,14 @@ export const ListData = [{
     "burningEngineOil": 1,
     "ars_esp_epc_aeb": 0,
     "closeAirConditionerOrWarmBraw": 1,
-    "result": 0
+    "result": 0,
+    "baseResult": 0,
   },
   {
     "productionDate": "20200308",
     "checkDate": "20200308",
     "ID": "京PM921",
-    "mileage": "122334",
+    "mileage": "250000",
     "rpm": "1",
     "power": "2",
     "cylinder": "3",
@@ -80,6 +81,7 @@ export const ListData = [{
     "burningEngineOil": 1,
     "ars_esp_epc_aeb": 0,
     "closeAirConditionerOrWarmBraw": 1,
-    "result": 0
+    "result": 0,
+    "baseResult": 0,
   }
 ];

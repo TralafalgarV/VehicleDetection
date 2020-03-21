@@ -18,6 +18,7 @@ import { fetchRequest } from "../../utils/fetchUtils";
 import { ListData } from "../../mockData";
 import PullToRefresh from 'react-native-pull-to-refresh-custom';
 import RefreshHeader from "../../common/RefreshHeader";
+import { MERGE_APPEARANCE_INFO } from "../../redux/actions/appearance.action";
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -41,12 +42,16 @@ class AppearanceList extends Component {
     this.props.fetchList(ListData);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      list: nextProps.list,
-      oldMock: nextProps.list,
-    });
-  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.list !== nextProps.list) {
+      return { 
+        list: nextProps.list,
+        oldMock: nextProps.list,
+      };
+    } else {
+      return null;
+    }
+  }  
 
   // 渲染外观检测单列表
   renderAppearanceListItem = data => {
@@ -133,10 +138,11 @@ class AppearanceList extends Component {
     }, 1000);
   }
 
-  // 选中某个item，并将数据回传
+  // 选中某个item，并将选中的数据存储
   selectedItem = (data) => {
     const { navigation } = this.props;
-    navigation && navigation.navigate('AddAppearance', {...data});
+    this.props.mergeAppearanceInfo(data);
+    navigation && navigation.navigate('AddAppearance');
   }
 
   addTransferSheet = () => {
@@ -182,7 +188,14 @@ const mapDispatchToProps = dispatch => {
           type: FETCH_APPEARANCE_LIST,
           payload: params,
         })
-      }
+      },
+      // 更新redux中的外观信息
+      mergeAppearanceInfo: params => {
+        dispatch({
+          type: MERGE_APPEARANCE_INFO,
+          payload: params,
+        })
+      },
   }
 }
 

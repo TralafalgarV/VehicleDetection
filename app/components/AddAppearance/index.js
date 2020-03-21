@@ -5,22 +5,66 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { View, StyleSheet, Text } from "react-native";
 import HeaderBar from "../../common/HeaderBar";
-import BaseInfo from "./Component/BaseInfo";
-import { WhiteSpace, Toast, Modal } from '@ant-design/react-native';
+import { WhiteSpace, Toast, Modal, List } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
-import { ADD_APPEARANCE } from "../../redux/actions/appearance.action";
+import { ADD_APPEARANCE, CLEAR_APPEARANCE_INFO } from "../../redux/actions/appearance.action";
+
+const itemArr = [
+  {
+    key: 'base',
+    name: '基础外观检测项目',
+  },
+  {
+    key: 'env',
+    name: '环保外观检测项目',
+  },
+  {
+    key: 'sec',
+    name: '安检外观检测项目',
+  },    
+];
 
 class AddAppearance extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.route.params) {
-      const { result } = this.props.route.params;
-      this.result = result; // 0 失败；1 成功
+    this.state = {
+      baseInfo: this.props.baseInfo,
+    };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.baseInfo !== nextProps.baseInfo) {
+      return { baseInfo: nextProps.baseInfo };
+    } else {
+      return null;
+    }
+  }
+
+  // 渲染外观检测单项目列表
+  renderItem = data => {
+    let status = '';
+    let color = '#fff';
+    const { baseResult } = this.state.baseInfo;
+
+    switch (data.key) {
+      case 'base':
+        status = baseResult ? '已通过' : '不通过';
+        color = baseResult ? '#5695D2' : '#ED5655';
+        break;     
+      default:
+        break;
     }
 
-    // 回显数据
-    this.data = this.props.route.params;
+    return (
+      <List.Item
+        key={data.key}
+        extra={<Text style={[styles.status, {color}]}>{status}</Text>}
+        onPress={() => this.navToDetectDetail(data.key)}
+      >
+      {data.name}
+      </List.Item>  
+    );
   }
 
   render() {
@@ -31,42 +75,34 @@ class AddAppearance extends Component {
           title='外观检测'
           rightItemName='提交'
           rightClick={this.showModal}
-          rightItemHidden={this.result == 1}
           leftClick={this.checkEdited}
         />
-        {/* 基本信息 */}
-          <BaseInfo ref={ref => this._baseInfo = ref} defaultState={this.data}/>
+          <List>
+          { itemArr.map(this.renderItem) }
+          </List>
           <WhiteSpace size='xl' />
       </View>
     );
   }
 
-  // 提交信息
-  submitInfo = () => {
-    const state = this._baseInfo.state;
-    state.result = this.result; // 结果状态
+  // 跳转到检测项目详情页
+  navToDetectDetail = (key) => {
+    const { navigation } = this.props;
 
-    // mock
-    Toast.loading('正在提交', 0.5, () => {
-      Toast.success('提交成功', 0.5, ()=> {
-        const { navigation } = this.props;
-          navigation && navigation.navigate('AppearanceList');
-        }, true);
-    }, true);
+    if (!navigation) return;
 
-    // 
-    // fetchRequest(ADD_APPEARANCE, state).
-    //   then(res => {
-    //     console.log(res);
-    //     Toast.success('提交成功', 0.5, ()=> {
-    //       const { navigation } = this.props;
-    //       navigation && navigation.navigate('AppearanceList');
-    //     }, true);
-    //   }).
-    //   catch(error => console.log(error));
+    switch (key) {
+      case 'base':
+        navigation.navigate('BaseDetailInfo');
+        break;
+      case 'env':
 
-    if (state.ID) {
-      this.props.addApearance(state);
+        break;
+      case 'sec':
+
+        break;
+      default:
+        break;
     }
   }
 
@@ -95,27 +131,76 @@ class AddAppearance extends Component {
     ]);
   };
 
+  // 选择弹框选项
   resultPress = result => {
     this.result = result;
     this.submitInfo();
   }
+
+  // 提交信息
+  submitInfo = () => {
+    const state = Object.assign({}, this.props.baseInfo);
+    state.result = this.result; // 结果状态
+
+    // mock
+    Toast.loading('正在提交', 0.5, () => {
+      Toast.success('提交成功', 0.5, ()=> {
+        const { navigation } = this.props;
+        navigation && navigation.navigate('AppearanceList');
+
+        // [TEMP]将外观数据存储到 redux 中
+        this.props.addApearance(state);
+
+        // 清除当前记录的流转单数据
+        this.props.clearAppearanceInfo();
+      }, true);
+    }, true);
+
+    // 
+    // fetchRequest(ADD_APPEARANCE, state).
+    //   then(res => {
+    //     console.log(res);
+    //     Toast.success('提交成功', 0.5, ()=> {
+    //       const { navigation } = this.props;
+    //       navigation && navigation.navigate('AppearanceList');
+    //     }, true);
+    //   }).
+    //   catch(error => console.log(error));
+  }  
+
+/**
+   * 检查数据是否被修改
+   * @memberof BaseDetailInfo
+   */  
+  checkEdited = () => {
+    if (true) {
+      this.showEditedModal()
+    } else {
+      const { navigation } = this.props;
+        navigation && navigation.goBack();
+    }
+  }  
 
   // 弹框选择是否放弃修改
   showEditedModal = () => {
     const { navigation } = this.props;
     Modal.alert(
     <Text style={styles.modalTitle}>确定离开吗？</Text>, 
-    <Text style={styles.modalContext}>您已经在当前页面进行数据修改，尚未保存，直接返回将丢失这些操作</Text>, 
+    <Text style={styles.modalContext}>您已经在当前页面进行数据修改，且尚未提交，直接返回将丢失这些数据</Text>, 
     [{
         text: '确定返回',
-        onPress: () => {navigation && navigation.goBack()},
+        onPress: () => {
+          navigation && navigation.goBack();
+          // 清除当前记录的流转单数据
+          this.props.clearAppearanceInfo();
+        },
         style: {
           textAlign: 'center',
           color: '#666'
         }
       },
       {
-        text: '继续编辑',
+        text: '我再看看',
         onPress: () => {},
         style: {
           textAlign: 'center',
@@ -124,21 +209,11 @@ class AddAppearance extends Component {
       },
     ]);
   };  
-
-  // 检查数据是否被修改
-  checkEdited = () => {
-    if (true) {
-      this.showEditedModal()
-    } else {
-      const { navigation } = this.props;
-        navigation && navigation.goBack();
-    }
-  }
 }
 
 const mapStateToProps = state => {
   return {
-    list: state.appearance.list,
+    baseInfo: state.appearance.baseInfo,
   };
 }
 
@@ -150,11 +225,21 @@ const mapDispatchToProps = dispatch => {
         type: ADD_APPEARANCE,
         payload: params
       });
-    }
+    },
+    // 清除基本外观数据
+    clearAppearanceInfo: () => {
+      dispatch({
+        type: CLEAR_APPEARANCE_INFO,
+      });
+    },
   };
 }
 
 const styles = StyleSheet.create({
+  status: {
+    fontSize: 16,
+    color: '#666',
+  },
   modalTitle: {
     fontSize: 20,
     color: '#5695d2',

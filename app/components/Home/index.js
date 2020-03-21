@@ -30,7 +30,7 @@ class Home extends Component {
     
     switch (index) {
       case 0:
-        navigation.navigate('AppearanceList')
+        navigation.navigate('AppearanceList');
         break;
 
       case 1:
