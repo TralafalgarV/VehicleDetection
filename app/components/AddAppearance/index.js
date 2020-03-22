@@ -12,15 +12,15 @@ import { ADD_APPEARANCE, CLEAR_APPEARANCE_INFO } from "../../redux/actions/appea
 const itemArr = [
   {
     key: 'base',
-    name: '基础外观检测项目',
+    name: '基础外观检验项目',
   },
   {
     key: 'env',
-    name: '环保外观检测项目',
+    name: '环保外观检验项目',
   },
   {
     key: 'sec',
-    name: '安检外观检测项目',
+    name: '安检外观检验项目',
   },    
 ];
 
@@ -45,13 +45,19 @@ class AddAppearance extends Component {
   renderItem = data => {
     let status = '';
     let color = '#fff';
-    const { baseResult } = this.state.baseInfo;
+    const {
+      baseResult, // 基础检测结果
+      envResult,  // 环保检测结果
+    } = this.state.baseInfo;
 
     switch (data.key) {
       case 'base':
         status = baseResult ? '已通过' : '不通过';
         color = baseResult ? '#5695D2' : '#ED5655';
-        break;     
+        break;
+      case 'env':
+        status = envResult ? '已通过' : '不通过';
+        color = envResult ? '#5695D2' : '#ED5655';
       default:
         break;
     }
@@ -96,7 +102,7 @@ class AddAppearance extends Component {
         navigation.navigate('BaseDetailInfo');
         break;
       case 'env':
-
+        navigation.navigate('EnvDetailInfo');
         break;
       case 'sec':
 

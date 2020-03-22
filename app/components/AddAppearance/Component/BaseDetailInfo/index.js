@@ -1,5 +1,5 @@
 /** 
- * 录入外观检测基本信息
+ * 基本外观检测信息
 */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
@@ -63,18 +63,6 @@ class BaseDetailInfo extends Component {
       isOBD: 1, // 是否有OBD
       isOBDnormal: 1, // OBD灯是否正常
       
-      machineStatus: 0, // 车辆机械状况
-      instrument: 0, // 车上仪表
-      mechanicalFailure: 0, // 影响安全或引起测试偏差的机械故障
-      exhaustPollutionFailure: 0, // 排气污染控制装置、泄露
-      crankcaseVentilate: 0, // 曲轴箱通风系统
-      fuelTankAndOils: 0, // 车辆油箱油品
-      engine_gearbox_coolingSystem: 0, // 发动机、变速箱和冷却系统等有无泄露
-      dry_clean_airPressure: 0, // 排气污染控制装置、泄露
-      oilEvaporation: 0, // 燃油蒸发控制系统
-      burningEngineOil: 0, // 烧机油或严重冒烟
-      ars_esp_epc_aeb: 0, // 中断ARS、ESP、EPC牵引力控制或自动制动系统等
-      closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
       baseResult: 0, // 0 通过； 1：未通过
     }, this.props.baseInfo);
 
@@ -86,7 +74,7 @@ class BaseDetailInfo extends Component {
       <View style={{flex: 1}}>
         <HeaderBar 
           navigation={ this.props.navigation }
-          title='基础外观检测项目'
+          title='基础外观检验项目'
           rightItemName='保存'
           rightClick={this.showModal}
           leftClick={this.checkEdited}
@@ -131,20 +119,6 @@ class BaseDetailInfo extends Component {
           <ListInputItem config={CONFIGINFO.cylinder} state={this.state} onChange={this.commonInputFunc} />
           {/* 排量 */}
           <ListInputItem config={CONFIGINFO.displacement} state={this.state} onChange={this.commonInputFunc} />
-          {/* 车辆机械状况 start*/}
-          <RadioListItem config={CONFIGINFO.machineStatus} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.instrument} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.mechanicalFailure} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.exhaustPollutionFailure} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.crankcaseVentilate} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.fuelTankAndOils} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.engine_gearbox_coolingSystem} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.dry_clean_airPressure} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.oilEvaporation} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.burningEngineOil} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.ars_esp_epc_aeb} state={this.state} onChange={this.commonInputFunc} />
-          <RadioListItem config={CONFIGINFO.closeAirConditionerOrWarmBraw} state={this.state} onChange={this.commonInputFunc} />
-          {/* 车辆机械状况 end*/}
           {/* 外地车发动机型号 */}
           <ListInputItem config={CONFIGINFO.outOfTownEngineModel} state={this.state} onChange={this.commonInputFunc} />
           {/* 制造厂商 */}

@@ -6,6 +6,8 @@ import {
   ADD_APPEARANCE_FAIL,
   MERGE_APPEARANCE_INFO,
   CLEAR_APPEARANCE_INFO,
+  FILTER_APPEARANCE_INFO,
+  REDO_APPEARANCE_INFO,
 } from "../../actions/appearance.action";
 
 // 初始化用户权限数据
@@ -57,6 +59,7 @@ const initialState = {
     closeAirConditionerOrWarmBraw: 0, // 关闭空调、暖风等附属设备
     baseResult: 0, // 0 通过； 1：未通过
   },
+  backupList: {},
 };
 
 export const appearance = (state = initialState, action) => {
@@ -65,12 +68,14 @@ export const appearance = (state = initialState, action) => {
     // 获取外观数据列表
     case FETCH_APPEARANCE_LIST:
       return update(state, {
-        list: { $set: action.payload }
+        list: { $set: action.payload },
+        backupList: { $set: action.payload },
       });
 
     case FETCH_APPEARANCE_LIST_FAIL:
       return update(state, {
-        list: { $set: [] }
+        list: { $set: [] },
+        backupList: { $set: [] },
       });
     
     // 合并外观检测数据
@@ -81,7 +86,18 @@ export const appearance = (state = initialState, action) => {
     
     case CLEAR_APPEARANCE_INFO: 
       return update(state, {
-        baseInfo: { $set: [] }
+        baseInfo: { $set: [] },
+      });
+
+    case FILTER_APPEARANCE_INFO:
+      const newList = state.list.filter(item => item.ID.match(action.payload));
+      return update(state, {
+        list: { $set: newList }
+      });
+    
+    case REDO_APPEARANCE_INFO:
+      return update(state, {
+        list: { $set: state.backupList },
       });
 
     // 添加一条 外观检测数据
@@ -103,7 +119,8 @@ export const appearance = (state = initialState, action) => {
       }
 
       return update(newState, {
-        list: { $unshift: [action.payload] }
+        list: { $unshift: [action.payload] },
+        backupList: { $unshift: [action.payload] },
       });
 
     case ADD_APPEARANCE_FAIL:

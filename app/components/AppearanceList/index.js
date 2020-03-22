@@ -18,7 +18,11 @@ import { fetchRequest } from "../../utils/fetchUtils";
 import { ListData } from "../../mockData";
 import PullToRefresh from 'react-native-pull-to-refresh-custom';
 import RefreshHeader from "../../common/RefreshHeader";
-import { MERGE_APPEARANCE_INFO } from "../../redux/actions/appearance.action";
+import {
+  MERGE_APPEARANCE_INFO,
+  FILTER_APPEARANCE_INFO,
+  REDO_APPEARANCE_INFO
+} from "../../redux/actions/appearance.action";
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -26,7 +30,6 @@ class AppearanceList extends Component {
     this.state = {
       searchText: '',
       list: this.props.list || [],
-      oldMock: this.props.list || [],
       refreshing: false,
     };
   }
@@ -46,7 +49,6 @@ class AppearanceList extends Component {
     if (prevState.list !== nextProps.list) {
       return { 
         list: nextProps.list,
-        oldMock: nextProps.list,
       };
     } else {
       return null;
@@ -129,7 +131,7 @@ class AppearanceList extends Component {
     });
 
     setTimeout(() => {
-      this.setState((prevState) => {
+      this.setState(() => {
         return {
           refreshing: false,
           list: this.props.list,
@@ -152,11 +154,7 @@ class AppearanceList extends Component {
 
   // 搜索
   searchID = () => {
-    this.setState((preState) => {
-      const { list, searchText } = preState;
-      const newList = list.filter(item => item.ID.match(searchText));
-      return { list: newList };
-    });
+    this.props.filterAppearanceInfo(this.state.searchText);
   }
 
   // 搜索框输入文字
@@ -166,9 +164,8 @@ class AppearanceList extends Component {
 
   // 取消
   clear = () => {
-    const { oldMock } = this.state;
+    this.props.redoAppearanceInfo();
     this.setState({
-      list: oldMock,
       searchText: '',
     })
   }  
@@ -182,20 +179,33 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      // 获取数据列表
-      fetchList: params => {
-        dispatch({
-          type: FETCH_APPEARANCE_LIST,
-          payload: params,
-        })
-      },
-      // 更新redux中的外观信息
-      mergeAppearanceInfo: params => {
-        dispatch({
-          type: MERGE_APPEARANCE_INFO,
-          payload: params,
-        })
-      },
+    // 获取数据列表
+    fetchList: params => {
+      dispatch({
+        type: FETCH_APPEARANCE_LIST,
+        payload: params,
+      })
+    },
+    // 更新redux中的外观信息
+    mergeAppearanceInfo: params => {
+      dispatch({
+        type: MERGE_APPEARANCE_INFO,
+        payload: params,
+      })
+    },
+    // 筛选数据
+    filterAppearanceInfo: params => {
+      dispatch({
+        type: FILTER_APPEARANCE_INFO,
+        payload: params,
+      })
+    },
+    // 恢复数据
+    redoAppearanceInfo: () => {
+      dispatch({
+        type: REDO_APPEARANCE_INFO,
+      })
+    },    
   }
 }
 

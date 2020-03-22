@@ -9,3 +9,7 @@ export const ADD_APPEARANCE_FAIL = 'add_appearance_list_fail';
 // 合并外观检测数据
 export const MERGE_APPEARANCE_INFO = 'merge_appearance_info';
 export const CLEAR_APPEARANCE_INFO = 'clear_appearance_info';
+
+// 外观数据列表筛选
+export const FILTER_APPEARANCE_INFO = 'filter_appearance_info';
+export const REDO_APPEARANCE_INFO = 'redo_appearance_info';
