@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   selectedItem: {
-    borderColor: '#5695d2',
+    borderColor: '#fff',
     backgroundColor: '#5695d2'
   },
   tagText: {

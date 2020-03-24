@@ -2,11 +2,11 @@
 const statusArr = [
   {
     value: 1,
-    label: '是',
+    label: '通过',
   }, 
   {
     value: 0,
-    label: '否',
+    label: '否决',
   },
 ];
 

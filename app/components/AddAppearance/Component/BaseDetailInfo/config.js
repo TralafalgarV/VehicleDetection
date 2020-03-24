@@ -230,18 +230,6 @@ const haveOBDStatusArr = [
   },
 ];
 
-// 车辆机械状况
-const alternativeArr = [
-  {
-    value: 1,
-    label: '是',
-  }, 
-  {
-    value: 0,
-    label: '否',
-  },
-];
-
 // 催化剂型号
 const catalystTypeArr = [
   {

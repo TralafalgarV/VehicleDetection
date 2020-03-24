@@ -3,11 +3,19 @@
  */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { View, StyleSheet, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+} from "react-native";
 import HeaderBar from "../../common/HeaderBar";
 import { WhiteSpace, Toast, Modal, List } from '@ant-design/react-native';
 import { fetchRequest } from "../../utils/fetchUtils";
-import { ADD_APPEARANCE, CLEAR_APPEARANCE_INFO } from "../../redux/actions/appearance.action";
+import {
+  ADD_APPEARANCE,
+  CLEAR_APPEARANCE_INFO
+} from "../../redux/actions/appearance.action";
 
 const itemArr = [
   {
@@ -63,19 +71,18 @@ class AddAppearance extends Component {
     }
 
     return (
-      <List.Item
-        key={data.key}
-        extra={<Text style={[styles.status, {color}]}>{status}</Text>}
-        onPress={() => this.navToDetectDetail(data.key)}
-      >
-      {data.name}
-      </List.Item>  
+      <TouchableWithoutFeedback key={data.key} onPress={() => this.navToDetectDetail(data.key)}>
+        <View style={styles.listItem} >
+          <Text style={styles.text}>{data.name}</Text>
+          <Text style={[styles.status, {color}]}>{status}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <HeaderBar 
           navigation={ this.props.navigation }
           title='外观检测'
@@ -83,9 +90,7 @@ class AddAppearance extends Component {
           rightClick={this.showModal}
           leftClick={this.checkEdited}
         />
-          <List>
           { itemArr.map(this.renderItem) }
-          </List>
           <WhiteSpace size='xl' />
       </View>
     );
@@ -105,7 +110,7 @@ class AddAppearance extends Component {
         navigation.navigate('EnvDetailInfo');
         break;
       case 'sec':
-
+        navigation.navigate('SecDetailInfo');
         break;
       default:
         break;
@@ -242,8 +247,12 @@ const mapDispatchToProps = dispatch => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF'
+  },
   status: {
-    fontSize: 16,
+    fontSize: 22,
     color: '#666',
   },
   modalTitle: {
@@ -256,6 +265,21 @@ const styles = StyleSheet.create({
     color: '#666',
     margin: 3,
   },
+  listItem: {
+    height: 80,
+    marginTop: 10,
+    marginHorizontal: 14,
+    padding: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 8,
+  },
+  text: {
+    fontSize: 22,
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddAppearance);

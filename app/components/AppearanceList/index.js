@@ -23,6 +23,7 @@ import {
   FILTER_APPEARANCE_INFO,
   REDO_APPEARANCE_INFO
 } from "../../redux/actions/appearance.action";
+import cssConfig from "../../styleSheet/css.config";
 
 class AppearanceList extends Component {
   constructor(props) {
@@ -82,7 +83,7 @@ class AppearanceList extends Component {
         extra={<Text style={[styles.status, {color}]}>{status}</Text>}
         onPress={() => this.selectedItem(data)}
       >
-      {data.ID}
+        <Text style={styles.text}>{data.ID}</Text>
       </List.Item>  
     );
   }
@@ -211,16 +212,21 @@ const mapDispatchToProps = dispatch => {
 
 const styles = StyleSheet.create({
   status: {
-    fontSize: 16,
+    fontSize: cssConfig.textFontSize,
     color: '#666',
+    margin: 10,
   },
   cancel: {
-    fontSize: 16,
+    fontSize: cssConfig.textFontSize,
     color: '#666'
   },
   refresh: {
     flex: 1,
     zIndex: -1
+  },
+  text: {
+    fontSize: cssConfig.textFontSize,
+    margin: 10,
   }
 });
 

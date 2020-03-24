@@ -1,6 +1,6 @@
 const cssConfig = {
-  titleFontSize: 24,
-  textFontSize: 18,
+  titleFontSize: 26,
+  textFontSize: 20,
 };
 
 export default cssConfig;

@@ -5,6 +5,7 @@ import AddAppearance from '../components/AddAppearance';
 import AppearanceList from '../components/AppearanceList';
 import BaseDetailInfo from "../components/AddAppearance/Component/BaseDetailInfo";
 import EnvDetailInfo from "../components/AddAppearance/Component/EnvDetailInfo";
+import SecDetailInfo from "../components/AddAppearance/Component/SecDetailInfo";
 
 // 注意：放在路由堆栈顶部组件优先展示
 const RouteConfig = [
@@ -41,6 +42,11 @@ const RouteConfig = [
     // 流转单 -- 环保外观信息
     name: 'EnvDetailInfo',
     component: EnvDetailInfo,
+  },
+  {
+    // 流转单 -- 安检外观信息
+    name: 'SecDetailInfo',
+    component: SecDetailInfo,
   },
 ];
 
